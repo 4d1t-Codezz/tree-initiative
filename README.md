@@ -16,14 +16,14 @@ Open **`config.js`**. Every number on the site that is likely to change is set t
 
 Tree counts, volunteer counts, event details and the team bios live directly in `index.html`. Search for the text you want to change.
 
-The gallery photo list is at the top of the "Planting photos" block in `main.js`.
+The photo list for the sliding strips is in the "Planting photos" block in `main.js`.
 
 ## Files
 
 ```
 index.html        page content
 styles.css        design tokens (colors, type) at the top, then sections
-main.js           animations (GSAP + ScrollTrigger + Lenis), visitor counter, team tabs, photo grid
+main.js           animations (GSAP + ScrollTrigger + Lenis), visitor counter, team tabs, photo strips
 config.js         editable numbers
 404.html          redirects old Wix URLs (/about-us, /donate, …) to the right section
 assets/img/       photos (resized; metadata/GPS stripped)
@@ -31,6 +31,11 @@ assets/bg/        Background-research images and book covers (from the original 
 assets/og.jpg     1200×630 image shown when the link is shared (iMessage, etc.)
 assets/video/     background loops (blur baked in with ffmpeg)
 ```
+
+## Publishing changes
+
+Run `sh tools/bump-version.sh` before committing. It stamps a new `?v=` on the CSS, JS and video links in `index.html`;
+without it, visitors can keep seeing the old files for up to 10 minutes (GitHub Pages caching).
 
 ## Credits
 

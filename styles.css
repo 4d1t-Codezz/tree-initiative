@@ -355,7 +355,7 @@ section { position: relative; padding-block: var(--section-y); isolation: isolat
    Photos
    ============================================================ */
 /* Sliding photo strips (full width, opposite directions, pause on hover) */
-.strips { display: grid; gap: 12px; overflow: hidden; padding-block: 4px; }
+.strips { display: grid; gap: 12px; overflow: hidden; padding-block: 10px; }
 .strip { display: flex; gap: 12px; width: max-content; animation: slide 90s linear infinite; }
 .strip--rev { animation-direction: reverse; animation-duration: 110s; }
 .strips:hover .strip { animation-play-state: paused; }
@@ -364,14 +364,6 @@ section { position: relative; padding-block: var(--section-y); isolation: isolat
 .strip button:hover { transform: translateY(-6px); box-shadow: 0 0 0 2px var(--ochre-300), 0 16px 36px -10px rgb(0 0 0 / .6), 0 0 32px -6px rgb(217 178 111 / .5); }
 .strip button:hover img { transform: scale(1.06); filter: saturate(1.1); }
 @keyframes slide { to { transform: translateX(-50%); } }
-
-.photos__more { display: flex; justify-content: center; margin-top: 36px; }
-.photo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 8px; margin-top: 32px; }
-.photo-grid[hidden] { display: none; }
-.photo-grid button { padding: 0; border: 0; background: var(--forest-800); cursor: zoom-in; border-radius: 4px; overflow: hidden; aspect-ratio: 1; transition: transform .5s var(--ease-out), box-shadow .5s; }
-.photo-grid img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s var(--ease-out); }
-.photo-grid button:hover { transform: translateY(-4px); box-shadow: 0 0 0 2px var(--ochre-300), 0 0 26px -6px rgb(217 178 111 / .5); }
-.photo-grid button:hover img { transform: scale(1.06); }
 
 .lightbox { position: fixed; inset: 0; z-index: 90; display: grid; place-items: center; padding: 24px; background: rgb(10 23 16 / .94); }
 .lightbox[hidden] { display: none; }
@@ -507,7 +499,6 @@ section { position: relative; padding-block: var(--section-y); isolation: isolat
   .logos { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
   .logos li { min-height: 180px; padding: 18px 12px; }
   .logos img, .logos__text { height: 72px; }
-  .photo-grid { grid-template-columns: repeat(2, 1fr); gap: 6px; }
   .source__body { padding: 22px; }
   .shelf { grid-template-columns: repeat(2, 1fr); }
   .join__grid { grid-template-columns: 1fr; }

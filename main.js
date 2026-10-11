@@ -153,43 +153,30 @@
     ["ev40", "A tree freshly mulched"], ["home3", "New saplings, mulched and watered"],
     ["partnerbanner", "A row of newly planted trees"],
   ];
-  const photoButton = ([name, alt], decorative) => {
+  const photoButton = ([name, alt], duplicate) => {
     const b = document.createElement("button");
     b.type = "button";
-    if (decorative) b.tabIndex = -1; // strips are aria-hidden duplicates of the grid
+    if (duplicate) { b.tabIndex = -1; b.setAttribute("aria-hidden", "true"); } // loop copy
     else b.setAttribute("aria-label", `View photo: ${alt}`);
-    b.innerHTML = `<img src="assets/img/${name}.jpg" alt="${decorative ? "" : alt}" data-alt="${alt}" loading="lazy">`;
+    b.innerHTML = `<img src="assets/img/${name}.jpg" alt="${duplicate ? "" : alt}" data-alt="${alt}" loading="lazy">`;
     return b;
   };
 
-  // Two strips sliding in opposite directions; each set is doubled for a seamless loop
+  // Three strips sliding across the screen, alternating direction.
+  // Each set is doubled so the loop is seamless.
   const strips = $("#photoStrips");
   if (strips) {
-    const half = Math.ceil(photos.length / 2);
-    [photos.slice(0, half), photos.slice(half)].forEach((set, i) => {
+    const rows = 3;
+    const per = Math.ceil(photos.length / rows);
+    for (let i = 0; i < rows; i++) {
+      const set = photos.slice(i * per, (i + 1) * per);
       const row = document.createElement("div");
-      row.className = "strip" + (i ? " strip--rev" : "");
-      [...set, ...set].forEach((p) => row.appendChild(photoButton(p, true)));
+      row.className = "strip" + (i % 2 ? " strip--rev" : "");
+      row.style.animationDuration = `${70 + i * 12}s`;
+      set.forEach((p) => row.appendChild(photoButton(p, false)));
+      set.forEach((p) => row.appendChild(photoButton(p, true)));
       strips.appendChild(row);
-    });
-  }
-
-  // Full grid, revealed on demand
-  const grid = $("#photoGrid");
-  const moreBtn = $("#morePhotos");
-  if (grid) {
-    photos.forEach((p) => grid.appendChild(photoButton(p, false)));
-    moreBtn.textContent = `Browse all ${photos.length} photos`;
-    moreBtn.addEventListener("click", () => {
-      const open = grid.hidden;
-      grid.hidden = !open;
-      moreBtn.setAttribute("aria-expanded", String(open));
-      moreBtn.textContent = open ? "Hide photo grid" : `Browse all ${photos.length} photos`;
-      if (open && window.gsap && !reduceMotion) {
-        gsap.from($$("button", grid), { autoAlpha: 0, y: 24, scale: 0.96, duration: 0.6, ease: "power3.out", stagger: 0.025 });
-      }
-      if (window.ScrollTrigger) window.ScrollTrigger.refresh();
-    });
+    }
   }
 
   /* ---------- Lightbox ---------- */
@@ -211,7 +198,7 @@
   }
   lb.addEventListener("click", (e) => { if (e.target !== lbImg) closeLightbox(); });
   document.addEventListener("click", (e) => {
-    const btn = e.target.closest(".photo-grid button, .strip button");
+    const btn = e.target.closest(".strip button");
     const img = btn ? $("img", btn) : e.target.closest(".event__media img");
     if (img) openLightbox(img.currentSrc || img.src, img.dataset.alt || img.alt);
   });
