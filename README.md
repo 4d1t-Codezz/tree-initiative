@@ -39,7 +39,11 @@ without it, visitors can keep seeing the old files for up to 10 minutes (GitHub 
 
 ## Credits
 
-Forest footage: [Mixkit](https://mixkit.co/) (free license).
+Opening (hero) video: built from Wikimedia Commons photos of Houston forests, animated with slow zooms and crossfades and color-adjusted.
+Photos by JuWiki (Buffalo Bayou), Another Believer (Mercer Arboretum, 2 photos), JoanLouise (Buffalo Bayou at Memorial Park)
+and Idawriter (Houston Arboretum), all [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/). Because of share-alike,
+`assets/video/hero.mp4` is also CC BY-SA 3.0.
+Other forest footage (impact and get-involved sections): [Mixkit](https://mixkit.co/) (free license).
 Houston footage: [Pexels](https://www.pexels.com/) (free license), clips 18126746, 10901571, 12907204, 32701339.
 National Geographic Society logo: Wikimedia Commons, used only to identify the Slingshot Challenge recognition.
 Visitor counter: [Abacus](https://abacus.jasoncameron.dev/) (free, no account).

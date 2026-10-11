@@ -29,7 +29,7 @@
   --font-body: "Alegreya Sans", "Gill Sans", system-ui, sans-serif;
 
   --radius: 8px;
-  --nav-h: 68px;
+  --nav-h: 80px;
   --gutter: clamp(16px, 4vw, 48px);
   --max: 1200px;
   --section-y: clamp(80px, 10vw, 136px);
@@ -105,7 +105,7 @@ section { position: relative; padding-block: var(--section-y); isolation: isolat
 }
 .btn--light { --bg: var(--paper); --fg: var(--forest-900); --bd: var(--paper); }
 .btn--light:hover { --bg: var(--ochre-300); --bd: var(--ochre-300); }
-.btn--ghost { --fg: var(--on-dark); --bd: rgb(243 236 223 / .45); }
+.btn--ghost { --fg: var(--on-dark); --bd: rgb(243 236 223 / .55); --bg: rgb(10 23 16 / .45); }
 .btn--ghost:hover { --bd: var(--on-dark); --bg: rgb(243 236 223 / .1); }
 .btn--sm { padding: 10px 16px; font-size: 16px; }
 
@@ -113,13 +113,13 @@ section { position: relative; padding-block: var(--section-y); isolation: isolat
 .vbg { position: absolute; inset: 0; z-index: -1; overflow: hidden; }
 /* max-width:none overrides the base `video { max-width: 100% }`, which otherwise cut the right edge short */
 .vbg__video { position: absolute; inset: -6% 0; width: 100%; height: 112%; max-width: none; object-fit: cover; }
-.vbg__shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgb(10 23 16 / .68), rgb(10 23 16 / .76)); }
-.vbg__shade--heavy { background: linear-gradient(180deg, rgb(10 23 16 / .55), rgb(10 23 16 / .7)); }
+.vbg__shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgb(10 23 16 / .45), rgb(10 23 16 / .55)); }
+.vbg__shade--heavy { background: linear-gradient(180deg, rgb(10 23 16 / .38), rgb(10 23 16 / .5)); }
 /* Houston footage: lighter so the city stays recognizable */
 .vbg__shade--city {
   background:
-    linear-gradient(90deg, rgb(10 23 16 / .82) 0%, rgb(10 23 16 / .5) 55%, rgb(10 23 16 / .22) 100%),
-    linear-gradient(180deg, rgb(10 23 16 / .2), rgb(10 23 16 / .35));
+    linear-gradient(90deg, rgb(10 23 16 / .6) 0%, rgb(10 23 16 / .3) 55%, rgb(10 23 16 / .08) 100%),
+    linear-gradient(180deg, rgb(10 23 16 / .12), rgb(10 23 16 / .25));
 }
 
 /* Dark sections recolor body text; light cards inside them keep dark text */
@@ -128,8 +128,8 @@ section { position: relative; padding-block: var(--section-y); isolation: isolat
 .section--dark .glance__card .more, .section--dark .source .more { color: var(--moss-500); }
 .vbg__shade--hero {
   background:
-    linear-gradient(90deg, rgb(10 23 16 / .78) 0%, rgb(10 23 16 / .4) 55%, rgb(10 23 16 / .12) 100%),
-    linear-gradient(180deg, rgb(10 23 16 / .15) 0%, rgb(10 23 16 / 0) 45%, rgb(10 23 16 / .6) 100%);
+    linear-gradient(90deg, rgb(10 23 16 / .66) 0%, rgb(10 23 16 / .38) 45%, rgb(10 23 16 / 0) 72%),
+    linear-gradient(180deg, rgb(10 23 16 / .25) 0%, rgb(10 23 16 / 0) 25%, rgb(10 23 16 / 0) 70%, rgb(10 23 16 / .35) 100%);
 }
 
 /* ============================================================
@@ -141,8 +141,9 @@ section { position: relative; padding-block: var(--section-y); isolation: isolat
   border-bottom: 1px solid var(--rule-dark);
 }
 .nav__inner { height: 100%; max-width: calc(var(--max) + 2 * var(--gutter)); margin-inline: auto; padding-inline: var(--gutter); display: flex; align-items: center; justify-content: space-between; gap: 24px; }
-.nav__brand { display: flex; align-items: center; gap: 12px; text-decoration: none; font: 700 19px/1.2 var(--font-body); white-space: nowrap; flex-shrink: 0; }
-.nav__brand img { width: 40px; height: 40px; }
+.nav__brand { display: flex; align-items: center; gap: 14px; text-decoration: none; font: 700 clamp(19px, 1.7vw, 24px)/1.15 var(--font-display); white-space: nowrap; flex-shrink: 0; }
+/* The logo is dark green; a cream disc keeps it visible on the dark nav */
+.nav__brand img { width: 56px; height: 56px; padding: 3px; border-radius: 50%; background: var(--paper); box-shadow: 0 0 0 2px rgb(217 178 111 / .55); }
 .nav__links { display: flex; align-items: center; gap: 26px; }
 .nav__links a:not(.btn) { font-size: 17px; text-decoration: none; color: var(--on-dark-soft); padding-block: 6px; border-bottom: 2px solid transparent; transition: color .2s, border-color .2s; white-space: nowrap; }
 .nav__links a:not(.btn):hover { color: var(--on-dark); }
@@ -172,14 +173,18 @@ section { position: relative; padding-block: var(--section-y); isolation: isolat
   color: var(--on-dark); overflow: hidden; background: var(--forest-950);
 }
 .hero__inner { position: relative; }
+.lockup { display: flex; align-items: center; gap: clamp(14px, 2vw, 22px); margin-bottom: clamp(16px, 2.6vh, 26px); }
+.lockup__logo { flex-shrink: 0; width: clamp(68px, 7vw, 104px); aspect-ratio: 1; border-radius: 50%; background: var(--paper); padding: 4px; box-shadow: 0 0 0 3px rgb(217 178 111 / .7), 0 10px 30px -8px rgb(0 0 0 / .6); }
+.lockup__logo img { width: 100%; height: 100%; }
+.lockup__name { font: 700 clamp(28px, 3.4vw, 48px)/1.1 var(--font-display); color: var(--on-dark); letter-spacing: -.005em; }
 .acronym {
-  font: 400 clamp(22px, 2.5vw, 32px)/1.3 var(--font-display);
+  font: 400 clamp(20px, 2.1vw, 28px)/1.3 var(--font-display);
   margin-bottom: clamp(18px, 3vh, 28px); max-width: 900px;
 }
 .acronym b { font-weight: 800; color: var(--ochre-300); margin-right: .2em; }
 .acronym u { text-decoration: none; font-weight: 800; color: var(--ochre-300); }
 .hero__title {
-  font: 600 clamp(44px, 6.6vw, 92px)/1.04 var(--font-display);
+  font: 600 clamp(40px, 5.6vw, 80px)/1.04 var(--font-display);
   letter-spacing: -.015em; margin-bottom: 28px;
 }
 /* padding gives descenders room inside the reveal mask; negative margin keeps line spacing */
@@ -282,7 +287,7 @@ section { position: relative; padding-block: var(--section-y); isolation: isolat
 .bars__fill { display: block; height: 100%; width: calc(var(--v) / 480 * 100%); background: var(--moss-400); transform-origin: left; }
 .bars li:first-child .bars__fill { background: var(--ochre-300); }
 
-.recognition { display: flex; align-items: center; gap: 32px; margin-top: 64px; padding-top: 36px; border-top: 1px solid var(--rule-dark); }
+.recognition { display: flex; align-items: center; gap: 32px; margin-top: 24px; }
 .recognition__logo .natgeo { width: 190px; height: auto; color: var(--on-dark); flex-shrink: 0; }
 .recognition { align-items: flex-start; }
 .recognition__body { max-width: 820px; }
@@ -426,7 +431,8 @@ section { position: relative; padding-block: var(--section-y); isolation: isolat
 .footer a { text-decoration: none; }
 .footer a:hover { color: var(--ochre-300); }
 .footer__contact { display: grid; gap: 8px; justify-items: start; }
-.footer__fine { padding-top: 24px; font-size: 15px; color: rgb(243 236 223 / .45); }
+.footer__fine { padding-top: 24px; font-size: 14px; line-height: 1.6; color: rgb(243 236 223 / .5); }
+.footer__fine a { text-decoration: underline; text-underline-offset: 2px; }
 
 /* ============================================================
    Hover: lift + warm glow
@@ -453,8 +459,18 @@ section { position: relative; padding-block: var(--section-y); isolation: isolat
 .btn:hover { transform: translateY(-2px); }
 .btn--light:hover { box-shadow: 0 10px 24px -8px rgb(217 178 111 / .6); }
 
+/* Dark panels behind dense text so the footage around them can stay bright */
+.impact .stats, .impact .impact__lower, .impact .recognition, .why__grid > div:first-child {
+  background: rgb(10 23 16 / .74); border: 1px solid var(--rule-dark); border-radius: var(--radius);
+  padding: clamp(22px, 3vw, 36px);
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+}
+.impact .impact__lower { margin-top: 24px; }
+.impact .stats .stat { border-top: 0; padding-top: 0; }
+
 /* Text sitting directly on video */
-.hero, .section--city, .impact, .join { text-shadow: 0 1px 16px rgb(0 0 0 / .35); }
+/* Lighter overlays, so lean on a stronger shadow to keep text crisp */
+.hero, .section--city, .impact, .join { text-shadow: 0 1px 2px rgb(0 0 0 / .45), 0 2px 18px rgb(0 0 0 / .55); }
 .glance__card, .source, .logos li, .btn, .fact { text-shadow: none; }
 
 /* ============================================================
@@ -488,6 +504,9 @@ section { position: relative; padding-block: var(--section-y); isolation: isolat
 
 @media (max-width: 640px) {
   body { font-size: 17.5px; }
+  /* Text spans the full width on phones, so darken evenly instead of from the left */
+  .vbg__shade--hero { background: linear-gradient(180deg, rgb(10 23 16 / .45), rgb(10 23 16 / .35) 50%, rgb(10 23 16 / .55)); }
+  .vbg__shade--city { background: rgb(10 23 16 / .5); }
   .award { flex-direction: column; align-items: flex-start; gap: 12px; }
   .award__text { padding-left: 0; border-left: 0; }
   .hero__ctas .btn { flex: 1 1 auto; }
