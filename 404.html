@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Houston TREE Initiative</title>
+  <!-- Old Wix page links (/about-us, /donate, etc.) land here and are sent to the matching section. -->
+  <script>
+    (function () {
+      var map = {
+        "about-us": "#founder", "initiative-goals": "#mission", "services-9": "#research",
+        "services-2": "#partners", "donate": "#join", "event-list": "#join", "about-3": "#projects"
+      };
+      var parts = location.pathname.split("/").filter(Boolean);
+      var slug = parts[parts.length - 1] || "";
+      var base = location.pathname.slice(0, location.pathname.indexOf(slug));
+      location.replace(base + (map[slug] || ""));
+    })();
+  </script>
+  <style>body{margin:0;background:#0f2218;color:#f3ecdf;font:16px system-ui;display:grid;place-items:center;min-height:100vh}</style>
+</head>
+<body><p>Redirecting to <a href="./" style="color:#d9b26f">the Houston TREE Initiative</a>…</p></body>
+</html>
