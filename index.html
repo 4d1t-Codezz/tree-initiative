@@ -332,8 +332,10 @@
       <div class="wrap">
         <h2 id="projects-title" class="h2 section-title" data-reveal>Plantings and events</h2>
 
-        <div class="events">
+        <div class="events timeline">
+          <div class="timeline__line" aria-hidden="true"><span class="timeline__progress"></span></div>
           <article class="event" data-reveal>
+            <span class="event__dot" aria-hidden="true"></span>
             <div class="event__media">
               <img src="assets/img/ev02.jpg" alt="Volunteers gathered for the Planting for Shade event on the Columbia Tap Trail" loading="lazy">
               <img src="assets/img/ev01.jpg" alt="Rows of newly planted, mulched saplings along the trail" loading="lazy">
@@ -348,6 +350,7 @@
           </article>
 
           <article class="event" data-reveal>
+            <span class="event__dot" aria-hidden="true"></span>
             <div class="event__media">
               <img src="assets/img/ev08.jpg" alt="Large group of volunteers at Alief Planting #1" loading="lazy">
               <img src="assets/img/ev13.jpg" alt="Volunteers digging and planting a tree on an Alief esplanade" loading="lazy">
@@ -362,6 +365,7 @@
           </article>
 
           <article class="event" data-reveal>
+            <span class="event__dot" aria-hidden="true"></span>
             <div class="event__media">
               <img src="assets/img/ev17.jpg" alt="Preparing planting beds along the Columbia Tap Trail" loading="lazy">
               <img src="assets/img/ev15.jpg" alt="Volunteers spreading mulch at the Tree Care Day" loading="lazy">
@@ -376,6 +380,7 @@
           </article>
 
           <article class="event" data-reveal>
+            <span class="event__dot" aria-hidden="true"></span>
             <div class="event__media">
               <img src="assets/img/ev23.jpg" alt="Volunteers digging holes for new trees" loading="lazy">
               <img src="assets/img/ev21.jpg" alt="Volunteers planting a sapling along the trail" loading="lazy">
@@ -390,6 +395,7 @@
           </article>
 
           <article class="event" data-reveal>
+            <span class="event__dot" aria-hidden="true"></span>
             <div class="event__media">
               <img src="assets/img/ev29.jpg" alt="Volunteers planting trees along a residential street" loading="lazy">
               <img src="assets/img/ev27.jpg" alt="Volunteer hauling mulch in a wheelbarrow along the trail" loading="lazy">
@@ -404,6 +410,7 @@
           </article>
 
           <article class="event" data-reveal>
+            <span class="event__dot" aria-hidden="true"></span>
             <div class="event__media">
               <img src="assets/img/ev34.jpg" alt="Volunteers planting trees along S. Dairy Ashford in Alief" loading="lazy">
               <img src="assets/img/ev37.jpg" alt="Volunteers in safety vests planting trees" loading="lazy">
@@ -418,6 +425,7 @@
           </article>
 
           <article class="event" data-reveal>
+            <span class="event__dot" aria-hidden="true"></span>
             <div class="event__media">
               <img src="assets/img/ws2.jpg" alt="Group photo of attendees and speakers at the TREE Initiative and AliefVotes workshop" loading="lazy">
               <img src="assets/img/ws5.jpg" alt="Barry Ward, executive director of Trees for Houston, presenting at the workshop" loading="lazy">
@@ -465,10 +473,13 @@
           <h2 id="photos-title" class="h2">Photos from our plantings</h2>
           <p class="section-intro">Volunteers planting, mulching and watering trees across Third Ward and Alief. Click any photo to see it larger.</p>
         </div>
-        <div class="photo-grid" id="photoGrid"></div>
+      </div>
+      <div class="strips" id="photoStrips" aria-hidden="true"></div>
+      <div class="wrap">
         <div class="photos__more">
-          <button class="btn btn--ghost" id="morePhotos" type="button">Show all photos</button>
+          <button class="btn btn--ghost" id="morePhotos" type="button" aria-expanded="false" aria-controls="photoGrid">Browse all photos</button>
         </div>
+        <div class="photo-grid" id="photoGrid" hidden></div>
       </div>
     </section>
 

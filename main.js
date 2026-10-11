@@ -112,6 +112,11 @@
       document.getElementById(t.getAttribute("aria-controls")).hidden = !on;
     });
     if (focus) tab.focus();
+    const panel = document.getElementById(tab.getAttribute("aria-controls"));
+    if (window.gsap && !reduceMotion) {
+      gsap.fromTo($(".person__photo img", panel), { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.7, ease: "power3.out", clearProps: "transform" });
+      gsap.fromTo($$(".person__body > *, .person__list li", panel), { autoAlpha: 0, x: 18 }, { autoAlpha: 1, x: 0, duration: 0.6, ease: "power3.out", stagger: 0.05, clearProps: "transform" });
+    }
     if (window.ScrollTrigger) window.ScrollTrigger.refresh();
   };
   tabs.forEach((t, i) => {
@@ -148,22 +153,41 @@
     ["ev40", "A tree freshly mulched"], ["home3", "New saplings, mulched and watered"],
     ["partnerbanner", "A row of newly planted trees"],
   ];
-  const FIRST = 18;
+  const photoButton = ([name, alt], decorative) => {
+    const b = document.createElement("button");
+    b.type = "button";
+    if (decorative) b.tabIndex = -1; // strips are aria-hidden duplicates of the grid
+    else b.setAttribute("aria-label", `View photo: ${alt}`);
+    b.innerHTML = `<img src="assets/img/${name}.jpg" alt="${decorative ? "" : alt}" data-alt="${alt}" loading="lazy">`;
+    return b;
+  };
+
+  // Two strips sliding in opposite directions; each set is doubled for a seamless loop
+  const strips = $("#photoStrips");
+  if (strips) {
+    const half = Math.ceil(photos.length / 2);
+    [photos.slice(0, half), photos.slice(half)].forEach((set, i) => {
+      const row = document.createElement("div");
+      row.className = "strip" + (i ? " strip--rev" : "");
+      [...set, ...set].forEach((p) => row.appendChild(photoButton(p, true)));
+      strips.appendChild(row);
+    });
+  }
+
+  // Full grid, revealed on demand
   const grid = $("#photoGrid");
   const moreBtn = $("#morePhotos");
   if (grid) {
-    photos.forEach(([name, alt], i) => {
-      const b = document.createElement("button");
-      b.type = "button";
-      b.setAttribute("aria-label", `View photo: ${alt}`);
-      if (i >= FIRST) b.hidden = true;
-      b.innerHTML = `<img src="assets/img/${name}.jpg" alt="${alt}" loading="lazy">`;
-      grid.appendChild(b);
-    });
-    moreBtn.textContent = `Show all ${photos.length} photos`;
+    photos.forEach((p) => grid.appendChild(photoButton(p, false)));
+    moreBtn.textContent = `Browse all ${photos.length} photos`;
     moreBtn.addEventListener("click", () => {
-      $$("button[hidden]", grid).forEach((b) => (b.hidden = false));
-      moreBtn.parentElement.hidden = true;
+      const open = grid.hidden;
+      grid.hidden = !open;
+      moreBtn.setAttribute("aria-expanded", String(open));
+      moreBtn.textContent = open ? "Hide photo grid" : `Browse all ${photos.length} photos`;
+      if (open && window.gsap && !reduceMotion) {
+        gsap.from($$("button", grid), { autoAlpha: 0, y: 24, scale: 0.96, duration: 0.6, ease: "power3.out", stagger: 0.025 });
+      }
       if (window.ScrollTrigger) window.ScrollTrigger.refresh();
     });
   }
@@ -187,9 +211,9 @@
   }
   lb.addEventListener("click", (e) => { if (e.target !== lbImg) closeLightbox(); });
   document.addEventListener("click", (e) => {
-    const btn = e.target.closest(".photo-grid button");
+    const btn = e.target.closest(".photo-grid button, .strip button");
     const img = btn ? $("img", btn) : e.target.closest(".event__media img");
-    if (img) openLightbox(img.currentSrc || img.src, img.alt);
+    if (img) openLightbox(img.currentSrc || img.src, img.dataset.alt || img.alt);
   });
 
   /* ---------- Animation (GSAP) ---------- */
@@ -225,12 +249,58 @@
       .from("[data-hero-line]", { yPercent: 115, duration: 1.3, stagger: 0.1 }, 0.15)
       .from("[data-hero]", { y: 20, autoAlpha: 0, duration: 1.1, stagger: 0.08 }, 0.4);
 
-    // Reveal on scroll
-    gsap.set("[data-reveal]", { autoAlpha: 0, y: 28 });
+    // Hero video slowly drifts as you scroll away
+    gsap.to(".hero .vbg__video", { yPercent: 8, scale: 1.06, ease: "none", scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true } });
+
+    // Reveal on scroll. clearProps afterwards so CSS :hover transforms work again.
+    gsap.set("[data-reveal]", { autoAlpha: 0, y: 36 });
     ScrollTrigger.batch("[data-reveal]", {
       start: "top 90%", once: true,
-      onEnter: (els) => gsap.to(els, { autoAlpha: 1, y: 0, duration: 0.9, ease: "power3.out", stagger: 0.08, overwrite: true }),
+      onEnter: (els) => gsap.to(els, { autoAlpha: 1, y: 0, duration: 1, ease: "power3.out", stagger: 0.1, overwrite: true, clearProps: "transform,opacity,visibility" }),
     });
+
+    // Groups that come in one item at a time
+    [[".logos", "li"], [".shelf", "li"], [".mini-stats", "li"], [".stats", ".stat"], [".person__list", "li"]].forEach(([parent, child]) => {
+      $$(parent).forEach((p) => {
+        gsap.from($$(child, p), {
+          autoAlpha: 0, y: 26, duration: 0.8, ease: "power3.out", stagger: 0.07, clearProps: "transform,opacity,visibility",
+          scrollTrigger: { trigger: p, start: "top 88%", once: true },
+        });
+      });
+    });
+
+    // Photos wipe open as they enter
+    $$(".goal-item__img, .event__media img, .person__photo img, .source > img").forEach((el) => {
+      gsap.from(el, {
+        clipPath: "inset(0 0 100% 0)", duration: 1.2, ease: "expo.out", clearProps: "clipPath",
+        scrollTrigger: { trigger: el, start: "top 88%", once: true },
+      });
+    });
+
+    // Gentle parallax inside the goal photos
+    $$(".goal-item__img img").forEach((img) => {
+      gsap.fromTo(img, { yPercent: -6, scale: 1.12 }, { yPercent: 6, scale: 1.12, ease: "none", scrollTrigger: { trigger: img.parentElement, start: "top bottom", end: "bottom top", scrub: true } });
+    });
+
+    // Background videos drift slightly slower than the page
+    $$("section:not(.hero) .vbg__video").forEach((v) => {
+      gsap.fromTo(v, { yPercent: -5 }, { yPercent: 5, ease: "none", scrollTrigger: { trigger: v.closest("section"), start: "top bottom", end: "bottom top", scrub: true } });
+    });
+
+    // Timeline: the line fills as you scroll and each dot lights up as its event arrives
+    const tl = $(".timeline");
+    if (tl) {
+      ScrollTrigger.create({
+        trigger: tl, start: "top 65%", end: "bottom 65%", scrub: true,
+        onUpdate: (self) => tl.style.setProperty("--tl", self.progress.toFixed(4)),
+      });
+      $$(".event", tl).forEach((evEl) => {
+        ScrollTrigger.create({ trigger: evEl, start: "top 65%", onEnter: () => evEl.classList.add("is-in"), onLeaveBack: () => evEl.classList.remove("is-in") });
+        const small = $(".event__media img:last-child", evEl);
+        // Parallax via a CSS variable so it combines with the CSS hover tilt
+        gsap.fromTo(small, { "--py": "36px" }, { "--py": "-24px", ease: "none", scrollTrigger: { trigger: evEl, start: "top bottom", end: "bottom top", scrub: true } });
+      });
+    }
 
     // Count-up numbers
     $$("[data-count]").forEach((el) => {
