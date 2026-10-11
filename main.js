@@ -6,6 +6,7 @@
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const fmt = (n) => Math.round(n).toLocaleString("en-US");
+  const navHeight = () => $("#nav").offsetHeight;
 
   $("#year").textContent = new Date().getFullYear();
 
@@ -23,7 +24,6 @@
     el.dataset.count = students;
   });
 
-  // Next event card
   const ev = CFG.nextEvent;
   const evCard = $(".join__card--event");
   if (ev === null && evCard) {
@@ -33,8 +33,7 @@
     if (!isNaN(d)) {
       $("#evMonth").textContent = d.toLocaleString("en-US", { month: "short" });
       $("#evDay").textContent = d.getDate();
-      const weekday = d.toLocaleString("en-US", { weekday: "long" });
-      $("#evPlace").textContent = `${weekday} · ${ev.place}`;
+      $("#evPlace").textContent = `${d.toLocaleString("en-US", { weekday: "long" })} · ${ev.place}`;
     }
     $("#evTitle").textContent = ev.title;
     if (ev.rsvp) $("#evRsvp").href = ev.rsvp;
@@ -48,35 +47,22 @@
     const key = encodeURIComponent(CFG.counterKey || "visits");
     let counted = false;
     try { counted = sessionStorage.getItem("tree-counted") === "1"; } catch (_) {}
-    const url = `https://abacus.jasoncameron.dev/${counted ? "get" : "hit"}/${ns}/${key}`;
     try {
-      const res = await fetch(url, { cache: "no-store" });
+      const res = await fetch(`https://abacus.jasoncameron.dev/${counted ? "get" : "hit"}/${ns}/${key}`, { cache: "no-store" });
       if (!res.ok) throw new Error(res.status);
       const { value } = await res.json();
       if (typeof value !== "number") throw new Error("bad value");
       try { sessionStorage.setItem("tree-counted", "1"); } catch (_) {}
       const total = base + value;
       visitorEl.dataset.count = total;
-      if (window.gsap && !reduceMotion && visitorEl.dataset.seen) {
-        countUp(visitorEl, total);
-      } else {
-        visitorEl.textContent = fmt(total);
-      }
+      if (window.gsap && !reduceMotion && visitorEl.dataset.seen) countUp(visitorEl, total);
+      else visitorEl.textContent = fmt(total);
     } catch (_) {
       visitorEl.textContent = base ? fmt(base) : "—";
     }
   })();
 
-  /* ---------- Nav ---------- */
-  const nav = $("#nav");
-  let lastY = window.scrollY;
-  const onScroll = () => {
-    const y = window.scrollY;
-    nav.classList.toggle("is-solid", y > 40);
-    const menuOpen = toggle.getAttribute("aria-expanded") === "true";
-    nav.classList.toggle("is-hidden", !menuOpen && y > lastY && y > 500);
-    lastY = y;
-  };
+  /* ---------- Mobile menu ---------- */
   const toggle = $("#navToggle");
   const menu = $("#mobileMenu");
   const setMenu = (open) => {
@@ -89,18 +75,16 @@
   toggle.addEventListener("click", () => setMenu(toggle.getAttribute("aria-expanded") !== "true"));
   $$("a", menu).forEach((a) => a.addEventListener("click", () => setMenu(false)));
   document.addEventListener("keydown", (e) => { if (e.key === "Escape") { setMenu(false); closeLightbox(); } });
-  window.addEventListener("scroll", onScroll, { passive: true });
-  onScroll();
 
-  // Active section highlighting
-  const navLinks = $$(".nav__links a[href^='#']");
+  // Active section in the nav
+  const navLinks = $$(".nav__links a[href^='#']:not(.btn)");
   const sectionObs = new IntersectionObserver((entries) => {
     entries.forEach((e) => {
       if (!e.isIntersecting) return;
       navLinks.forEach((a) => a.classList.toggle("is-active", a.getAttribute("href") === "#" + e.target.id));
     });
-  }, { rootMargin: "-45% 0px -50% 0px" });
-  ["glance", "impact", "founder", "projects", "partners", "join"].forEach((id) => { const s = document.getElementById(id); if (s) sectionObs.observe(s); });
+  }, { rootMargin: "-40% 0px -55% 0px" });
+  navLinks.forEach((a) => { const s = document.querySelector(a.getAttribute("href")); if (s) sectionObs.observe(s); });
 
   /* ---------- Background videos: play only while visible ---------- */
   const videoObs = new IntersectionObserver((entries) => {
@@ -118,33 +102,69 @@
     videoObs.observe(v);
   });
 
-  /* ---------- Gallery ---------- */
+  /* ---------- Team tabs ---------- */
+  const tabs = $$('[role="tab"]');
+  const selectTab = (tab, focus) => {
+    tabs.forEach((t) => {
+      const on = t === tab;
+      t.setAttribute("aria-selected", String(on));
+      t.tabIndex = on ? 0 : -1;
+      document.getElementById(t.getAttribute("aria-controls")).hidden = !on;
+    });
+    if (focus) tab.focus();
+    if (window.ScrollTrigger) window.ScrollTrigger.refresh();
+  };
+  tabs.forEach((t, i) => {
+    t.addEventListener("click", () => selectTab(t));
+    t.addEventListener("keydown", (e) => {
+      const step = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[e.key];
+      if (step) { e.preventDefault(); selectTab(tabs[(i + step + tabs.length) % tabs.length], true); }
+      if (e.key === "Home") { e.preventDefault(); selectTab(tabs[0], true); }
+      if (e.key === "End") { e.preventDefault(); selectTab(tabs[tabs.length - 1], true); }
+    });
+  });
+
+  /* ---------- Planting photos ---------- */
   const photos = [
-    ["ev02", "Volunteers gathered at the Columbia Tap Trail"], ["ev05", "Volunteer carrying a tree to plant", 1],
-    ["ev08", "Volunteers at Alief Planting #1"], ["ev13", "Digging in at Alief", 1], ["ev21", "Planting a sapling along the trail", 1],
-    ["ev09", "Rows of newly mulched trees"], ["ev24", "Breaking ground for a new tree", 1], ["ev31", "Volunteers at Columbia Tap Planting #3", 1],
-    ["ev14", "Tree Care Day on the Columbia Tap Trail"], ["ev12", "A newly planted tree along the trail", 1],
-    ["ws4", "AliefVotes presenting at the workshop", 1], ["ev33", "New trees on S. Dairy Ashford", 1], ["ev19", "Tree Care Day volunteers"],
-    ["ev28", "A freshly planted tree", 1], ["ev18", "Planting along the trail"], ["ev11", "Native saplings ready for planting", 1],
-    ["ev35", "Volunteers on the Alief esplanade", 1], ["ws3", "Ed Pettitt of Friends of Columbia Tap speaking", 1], ["ev06", "A young tree, planted and mulched", 1],
-    ["ev22", "Hands in the soil", 1], ["ev30", "Planting together", 1], ["home", "Houston trees at dusk"],
+    ["ev02", "Volunteers gathered on the Columbia Tap Trail"], ["ev08", "Volunteers at Alief Planting #1"],
+    ["ev10", "Planting a tree on an Alief esplanade"], ["ev05", "A volunteer carrying a tree to plant"],
+    ["ev13", "Digging in at Alief"], ["ev01", "Rows of newly planted, mulched trees"],
+    ["ev16", "Mulching young trees"], ["ev21", "Planting a sapling along the trail"],
+    ["ev23", "Digging holes for new trees"], ["ev25", "Getting a tree ready to plant"],
+    ["ev29", "Planting along a residential street"], ["ev31", "Volunteers at Columbia Tap Planting #3"],
+    ["ev34", "Planting along S. Dairy Ashford"], ["ev37", "Volunteers in safety vests planting trees"],
+    ["ev14", "Tree Care Day on the Columbia Tap Trail"], ["ev17", "Preparing planting beds"],
+    ["ev09", "Newly mulched trees along the trail"], ["home2", "Planting a young tree"],
+    ["ev03", "Saplings waiting to be planted"], ["ev04", "Watering a new tree"],
+    ["ev06", "A young tree, planted and mulched"], ["ev07", "Juliette Oudinot at a planting"],
+    ["ev11", "Native saplings ready for planting"], ["ev12", "A newly planted tree along the trail"],
+    ["ev15", "Spreading mulch at the Tree Care Day"], ["ev18", "Planting along the trail"],
+    ["ev19", "Tree Care Day volunteers"], ["ev20", "A new tree on the Columbia Tap Trail"],
+    ["ev22", "Hands in the soil"], ["ev24", "Breaking ground for a new tree"],
+    ["ev26", "Trees ready to be planted"], ["ev27", "Hauling mulch along the trail"],
+    ["ev28", "A freshly planted tree"], ["ev30", "Planting together"],
+    ["ev32", "Planting beside the trail"], ["ev33", "New trees on S. Dairy Ashford"],
+    ["ev35", "Volunteers on the Alief esplanade"], ["ev36", "A newly shaded median in Alief"],
+    ["ev40", "A tree freshly mulched"], ["home3", "New saplings, mulched and watered"],
+    ["partnerbanner", "A row of newly planted trees"],
   ];
-  const gallery = $("#gallery");
-  if (gallery) {
-    const half = Math.ceil(photos.length / 2);
-    [photos.slice(0, half), photos.slice(half)].forEach((set, i) => {
-      const row = document.createElement("div");
-      row.className = "gallery__row" + (i ? " gallery__row--rev" : "");
-      // duplicate for a seamless loop
-      [...set, ...set].forEach(([name, alt, tall], j) => {
-        const b = document.createElement("button");
-        b.type = "button";
-        if (j >= set.length) { b.tabIndex = -1; b.setAttribute("aria-hidden", "true"); }
-        b.setAttribute("aria-label", `View photo: ${alt}`);
-        b.innerHTML = `<img src="assets/img/${name}.jpg" alt="${alt}" loading="lazy" class="${tall ? "tall" : ""}">`;
-        row.appendChild(b);
-      });
-      gallery.appendChild(row);
+  const FIRST = 18;
+  const grid = $("#photoGrid");
+  const moreBtn = $("#morePhotos");
+  if (grid) {
+    photos.forEach(([name, alt], i) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.setAttribute("aria-label", `View photo: ${alt}`);
+      if (i >= FIRST) b.hidden = true;
+      b.innerHTML = `<img src="assets/img/${name}.jpg" alt="${alt}" loading="lazy">`;
+      grid.appendChild(b);
+    });
+    moreBtn.textContent = `Show all ${photos.length} photos`;
+    moreBtn.addEventListener("click", () => {
+      $$("button[hidden]", grid).forEach((b) => (b.hidden = false));
+      moreBtn.parentElement.hidden = true;
+      if (window.ScrollTrigger) window.ScrollTrigger.refresh();
     });
   }
 
@@ -167,28 +187,25 @@
   }
   lb.addEventListener("click", (e) => { if (e.target !== lbImg) closeLightbox(); });
   document.addEventListener("click", (e) => {
-    const img = e.target.closest(".gallery__row img, .event__media img") || (e.target.closest(".gallery__row button") && $("img", e.target.closest("button")));
+    const btn = e.target.closest(".photo-grid button");
+    const img = btn ? $("img", btn) : e.target.closest(".event__media img");
     if (img) openLightbox(img.currentSrc || img.src, img.alt);
   });
 
   /* ---------- Animation (GSAP) ---------- */
   function countUp(el, to) {
     const obj = { v: 0 };
-    gsap.to(obj, {
-      v: to, duration: to > 100 ? 2.2 : 1.6, ease: "power3.out",
-      onUpdate: () => { el.textContent = fmt(obj.v); },
-    });
+    gsap.to(obj, { v: to, duration: to > 100 ? 2 : 1.4, ease: "power3.out", onUpdate: () => { el.textContent = fmt(obj.v); } });
   }
 
   function initMotion() {
     const { gsap, ScrollTrigger } = window;
     if (!gsap || !ScrollTrigger || reduceMotion) return;
     gsap.registerPlugin(ScrollTrigger);
-    document.documentElement.classList.add("has-motion");
 
-    // Smooth scroll
+    // Smooth scroll (mouse/trackpad only)
     if (window.Lenis && !matchMedia("(pointer: coarse)").matches) {
-      const lenis = new Lenis({ duration: 1.15, smoothWheel: true });
+      const lenis = new Lenis({ duration: 1.1, smoothWheel: true });
       window.__lenis = lenis;
       lenis.on("scroll", ScrollTrigger.update);
       gsap.ticker.add((t) => lenis.raf(t * 1000));
@@ -198,41 +215,27 @@
         const target = id.length > 1 && document.querySelector(id);
         if (!target) return;
         e.preventDefault();
-        lenis.scrollTo(target, { offset: id === "#top" ? 0 : -10, duration: 1.4 });
+        lenis.scrollTo(target, { offset: id === "#top" ? 0 : -navHeight(), duration: 1.2 });
       }));
     }
 
     // Hero intro
-    const intro = gsap.timeline({ defaults: { ease: "expo.out" } });
-    intro
-      .from(".hero .vbg__video", { scale: 1.25, duration: 2.6, ease: "power2.out" }, 0)
-      .from("[data-hero-line]", { yPercent: 115, duration: 1.4, stagger: 0.12 }, 0.2)
-      .from("[data-hero]", { y: 28, autoAlpha: 0, duration: 1.2, stagger: 0.1 }, 0.55)
-      .from(".hero__ticker", { yPercent: 100, duration: 1.2 }, 0.9)
-      .from(".nav", { y: -30, autoAlpha: 0, duration: 1 }, 0.6);
-
-    // Hero parallax on scroll
-    gsap.to(".hero__inner", {
-      yPercent: -18, autoAlpha: 0.15, ease: "none",
-      scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true },
-    });
-    gsap.to(".hero .vbg__video", {
-      yPercent: 12, ease: "none",
-      scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true },
-    });
+    gsap.timeline({ defaults: { ease: "expo.out" } })
+      .from(".hero .vbg__video", { scale: 1.2, duration: 2.4, ease: "power2.out" }, 0)
+      .from("[data-hero-line]", { yPercent: 115, duration: 1.3, stagger: 0.1 }, 0.15)
+      .from("[data-hero]", { y: 20, autoAlpha: 0, duration: 1.1, stagger: 0.08 }, 0.4);
 
     // Reveal on scroll
-    gsap.set("[data-reveal]", { autoAlpha: 0, y: 40 });
+    gsap.set("[data-reveal]", { autoAlpha: 0, y: 28 });
     ScrollTrigger.batch("[data-reveal]", {
-      start: "top 88%",
-      once: true,
-      onEnter: (els) => gsap.to(els, { autoAlpha: 1, y: 0, duration: 1.1, ease: "expo.out", stagger: 0.09, overwrite: true }),
+      start: "top 90%", once: true,
+      onEnter: (els) => gsap.to(els, { autoAlpha: 1, y: 0, duration: 0.9, ease: "power3.out", stagger: 0.08, overwrite: true }),
     });
 
     // Count-up numbers
     $$("[data-count]").forEach((el) => {
       ScrollTrigger.create({
-        trigger: el, start: "top 90%", once: true,
+        trigger: el, start: "top 92%", once: true,
         onEnter: () => {
           el.dataset.seen = "1";
           const to = Number(el.dataset.count);
@@ -241,65 +244,9 @@
       });
     });
 
-    // Progress + bar chart
-    gsap.from(".goal__fill", {
-      scaleX: 0, duration: 2, ease: "power3.out",
-      scrollTrigger: { trigger: ".goal", start: "top 85%", once: true },
-    });
-    gsap.from(".bars__fill", {
-      scaleX: 0, duration: 1.4, ease: "power3.out", stagger: 0.12,
-      scrollTrigger: { trigger: ".bars", start: "top 85%", once: true },
-    });
-
-    // Recognition number punch-in
-    gsap.from(".recognition__big", {
-      scale: 0.85, autoAlpha: 0, duration: 1.6, ease: "expo.out",
-      scrollTrigger: { trigger: ".recognition", start: "top 70%", once: true },
-    });
-
-    // Timeline progress line + active dots
-    const tl = $(".timeline");
-    if (tl) {
-      ScrollTrigger.create({
-        trigger: tl, start: "top 60%", end: "bottom 60%", scrub: true,
-        onUpdate: (self) => tl.style.setProperty("--tl", self.progress.toFixed(4)),
-      });
-      $$(".event").forEach((evEl) => {
-        ScrollTrigger.create({ trigger: evEl, start: "top 60%", onEnter: () => evEl.classList.add("is-in"), onLeaveBack: () => evEl.classList.remove("is-in") });
-        const imgs = $$(".event__media img", evEl);
-        gsap.from(imgs[1], { yPercent: 25, ease: "none", scrollTrigger: { trigger: evEl, start: "top bottom", end: "bottom top", scrub: true } });
-      });
-    }
-
-    // Image parallax
-    $$("[data-parallax]").forEach((img) => {
-      gsap.fromTo(img, { yPercent: -8 }, {
-        yPercent: 0, ease: "none",
-        scrollTrigger: { trigger: img.parentElement, start: "top bottom", end: "bottom top", scrub: true },
-      });
-    });
-
-    // Section video drift
-    $$("section:not(.hero) .vbg__video").forEach((v) => {
-      gsap.fromTo(v, { yPercent: -4 }, {
-        yPercent: 4, ease: "none",
-        scrollTrigger: { trigger: v.closest("section"), start: "top bottom", end: "bottom top", scrub: true },
-      });
-    });
-
-    // Magnetic buttons (fine pointers only)
-    if (matchMedia("(pointer: fine)").matches) {
-      $$(".magnetic").forEach((btn) => {
-        const xTo = gsap.quickTo(btn, "x", { duration: 0.6, ease: "elastic.out(1, 0.4)" });
-        const yTo = gsap.quickTo(btn, "y", { duration: 0.6, ease: "elastic.out(1, 0.4)" });
-        btn.addEventListener("mousemove", (e) => {
-          const r = btn.getBoundingClientRect();
-          xTo((e.clientX - r.left - r.width / 2) * 0.25);
-          yTo((e.clientY - r.top - r.height / 2) * 0.35);
-        });
-        btn.addEventListener("mouseleave", () => { xTo(0); yTo(0); });
-      });
-    }
+    // Progress bars
+    gsap.from(".target__fill", { scaleX: 0, duration: 1.6, ease: "power3.out", scrollTrigger: { trigger: ".target", start: "top 88%", once: true } });
+    gsap.from(".bars__fill", { scaleX: 0, duration: 1.2, ease: "power3.out", stagger: 0.1, scrollTrigger: { trigger: ".bars", start: "top 88%", once: true } });
 
     window.addEventListener("load", () => ScrollTrigger.refresh());
   }

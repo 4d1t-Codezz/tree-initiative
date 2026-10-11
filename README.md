@@ -9,28 +9,34 @@ Open **`config.js`**. Every number on the site that is likely to change is set t
 
 | Setting | What it controls |
 |---|---|
-| `schoolStudents` | "Students from her school" stat (set to a number) |
+| `schoolStudents` | "Students from Vedika's school" stat (set to a number) |
 | `visitorBaseline` | Visitors from before this site launched (e.g. the Wix Analytics total); the live counter adds on top |
 | `partners` | Partner list; the "N organizations" count is computed from its length |
 | `nextEvent` | The "Next planting" card in Get Involved (`null` hides it) |
 
-Tree counts, volunteer counts and event details live directly in `index.html`. Search for the number you want to change.
+Tree counts, volunteer counts, event details and the team bios live directly in `index.html`. Search for the text you want to change.
+
+The gallery photo list is at the top of the "Planting photos" block in `main.js`.
 
 ## Files
 
 ```
 index.html        page content
 styles.css        design tokens (colors, type) at the top, then sections
-main.js           animations (GSAP + ScrollTrigger + Lenis), visitor counter, gallery
+main.js           animations (GSAP + ScrollTrigger + Lenis), visitor counter, team tabs, photo grid
 config.js         editable numbers
 404.html          redirects old Wix URLs (/about-us, /donate, …) to the right section
 assets/img/       photos (resized; metadata/GPS stripped)
+assets/bg/        Background-research images and book covers (from the original site)
+assets/og.jpg     1200×630 image shown when the link is shared (iMessage, etc.)
 assets/video/     background loops (blur baked in with ffmpeg)
 ```
 
 ## Credits
 
-Background footage: [Mixkit](https://mixkit.co/) (free license).
+Forest footage: [Mixkit](https://mixkit.co/) (free license).
+Houston footage: [Pexels](https://www.pexels.com/) (free license), clips 18126746, 10901571, 12907204, 32701339.
+National Geographic Society logo: Wikimedia Commons, used only to identify the Slingshot Challenge recognition.
 Visitor counter: [Abacus](https://abacus.jasoncameron.dev/) (free, no account).
 
 ## Using the treeinitiative.net domain
@@ -39,3 +45,4 @@ Visitor counter: [Abacus](https://abacus.jasoncameron.dev/) (free, no account).
 2. At the domain registrar: add a `CNAME` record `www → 4d1t-codezz.github.io`, plus `A` records for the apex
    (`185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`).
 3. Disconnect the domain from Wix first.
+4. Update the `og:url` and `og:image` URLs in `index.html` to the new domain so link previews keep working.
