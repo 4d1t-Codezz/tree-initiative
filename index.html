@@ -25,7 +25,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400..800;1,400..600&family=Alegreya+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20261011132106">
+  <link rel="stylesheet" href="styles.css?v=20261011135122">
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
@@ -65,9 +65,14 @@
     <!-- ========== HERO ========== -->
     <section class="hero" id="top">
       <div class="vbg" aria-hidden="true">
-        <video class="vbg__video" autoplay muted loop playsinline preload="auto" poster="assets/video/hero.jpg?v=20261011132106">
-          <source src="assets/video/hero-sm.mp4?v=20261011132106" type="video/mp4" media="(max-width: 900px)">
-          <source src="assets/video/hero.mp4?v=20261011132106" type="video/mp4">
+        <video class="vbg__video" autoplay muted loop playsinline preload="auto" poster="assets/video/hero.jpg?v=20261011135122">
+          <!-- Browser takes the first it can play: phones get 960px, others 1080p; AV1 > HEVC (Safari) > H.264 -->
+          <source src="assets/video/hero-sm-av1.mp4?v=20261011135122" type='video/mp4; codecs="av01.0.05M.08"' media="(max-width: 900px)">
+          <source src="assets/video/hero-sm-hevc.mp4?v=20261011135122" type='video/mp4; codecs="hvc1.1.6.L120.90"' media="(max-width: 900px)">
+          <source src="assets/video/hero-sm.mp4?v=20261011135122" type="video/mp4" media="(max-width: 900px)">
+          <source src="assets/video/hero-av1.mp4?v=20261011135122" type='video/mp4; codecs="av01.0.08M.08"'>
+          <source src="assets/video/hero-hevc.mp4?v=20261011135122" type='video/mp4; codecs="hvc1.1.6.L120.90"'>
+          <source src="assets/video/hero-sm.mp4?v=20261011135122" type="video/mp4">
         </video>
         <div class="vbg__shade vbg__shade--hero"></div>
       </div>
@@ -109,8 +114,8 @@
     <!-- ========== AT A GLANCE ========== -->
     <section class="glance section--dark section--city" id="about" aria-labelledby="glance-title">
       <div class="vbg" aria-hidden="true">
-        <video class="vbg__video" muted loop playsinline preload="none" poster="assets/video/hou-sunset.jpg?v=20261011132106" data-lazy-video>
-          <source src="assets/video/hou-sunset.mp4?v=20261011132106" type="video/mp4">
+        <video class="vbg__video" muted loop playsinline preload="none" poster="assets/video/hou-sunset.jpg?v=20261011135122" data-lazy-video>
+          <source src="assets/video/hou-sunset.mp4?v=20261011135122" type="video/mp4">
         </video>
         <div class="vbg__shade vbg__shade--city"></div>
       </div>
@@ -131,11 +136,78 @@
       </div>
     </section>
 
+    <!-- ========== JOIN ========== -->
+    <section class="join section--dark" id="join" aria-labelledby="join-title">
+      <div class="vbg" aria-hidden="true">
+        <video class="vbg__video" muted loop playsinline preload="none" poster="assets/video/pines.jpg?v=20261011135122" data-lazy-video>
+          <source src="assets/video/pines.mp4?v=20261011135122" type="video/mp4">
+        </video>
+        <div class="vbg__shade vbg__shade--heavy"></div>
+      </div>
+      <div class="wrap">
+        <h2 id="join-title" class="h2 section-title" data-reveal>Get involved</h2>
+        <div class="join__grid">
+          <article class="join__card join__card--event" data-reveal>
+            <p class="join__kicker">Next planting</p>
+            <div class="date"><span class="date__m" id="evMonth">Oct</span><span class="date__d" id="evDay">24</span></div>
+            <h3 id="evTitle">October Tree Planting</h3>
+            <p id="evPlace">Saturday · 3616 Briley St, Houston</p>
+            <a class="btn btn--light" id="evRsvp" href="mailto:houstontreeinitiative@gmail.com?subject=RSVP%3A%20October%20Tree%20Planting">RSVP by email</a>
+          </article>
+          <article class="join__card join__card--donate" data-reveal>
+            <p class="join__kicker">Donate</p>
+            <h3>Support a planting</h3>
+            <p>Donations fund tree plantings in Houston&rsquo;s underserved communities. All donations go to tree plantings and are tax-deductible. To make your donation tax-exempt, email <a href="mailto:houstontreeinitiative@gmail.com">houstontreeinitiative@gmail.com</a>.</p>
+            <form class="donate" id="donateForm" novalidate>
+              <fieldset class="donate__group">
+                <legend>Frequency</legend>
+                <div class="donate__options">
+                  <label><input type="radio" name="frequency" value="once" checked><span>One time</span></label>
+                  <label><input type="radio" name="frequency" value="monthly"><span>Monthly</span></label>
+                </div>
+              </fieldset>
+              <fieldset class="donate__group">
+                <legend>Amount</legend>
+                <div class="donate__options donate__options--amounts">
+                  <label><input type="radio" name="amount" value="50" checked><span>$50</span></label>
+                  <label><input type="radio" name="amount" value="100"><span>$100</span></label>
+                  <label><input type="radio" name="amount" value="250"><span>$250</span></label>
+                  <label><input type="radio" name="amount" value="500"><span>$500</span></label>
+                  <label><input type="radio" name="amount" value="other"><span>Other</span></label>
+                </div>
+                <label class="donate__other" id="donateOther" hidden>
+                  <span class="visually-hidden">Other amount in dollars</span>
+                  <span class="donate__dollar" aria-hidden="true">$</span>
+                  <input type="number" name="otherAmount" min="1" step="1" inputmode="numeric" placeholder="Enter amount">
+                </label>
+              </fieldset>
+              <label class="donate__comment">
+                <span>Comment (optional)</span>
+                <textarea name="comment" maxlength="100" rows="2"></textarea>
+                <span class="donate__count" id="donateCount" aria-live="polite">0/100</span>
+              </label>
+              <button type="submit" class="btn btn--light donate__submit" id="donateSubmit">Donate $50</button>
+              <p class="donate__note" id="donateNote" role="status"></p>
+            </form>
+          </article>
+          <article class="join__card" data-reveal>
+            <p class="join__kicker">Contact</p>
+            <h3>Work with us</h3>
+            <p>If your school, group or neighborhood wants to host a planting, get in touch.</p>
+            <div class="join__links">
+              <a class="btn btn--ghost" href="mailto:houstontreeinitiative@gmail.com">Email us</a>
+              <a class="btn btn--ghost" href="https://www.instagram.com/houstontreeinitiative/" target="_blank" rel="noopener">Instagram</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
     <!-- ========== WHY ========== -->
     <section class="why section--dark section--city" aria-labelledby="why-title">
       <div class="vbg" aria-hidden="true">
-        <video class="vbg__video" muted loop playsinline preload="none" poster="assets/video/hou-freeway.jpg?v=20261011132106" data-lazy-video>
-          <source src="assets/video/hou-freeway.mp4?v=20261011132106" type="video/mp4">
+        <video class="vbg__video" muted loop playsinline preload="none" poster="assets/video/hou-freeway.jpg?v=20261011135122" data-lazy-video>
+          <source src="assets/video/hou-freeway.mp4?v=20261011135122" type="video/mp4">
         </video>
         <div class="vbg__shade vbg__shade--city"></div>
       </div>
@@ -209,8 +281,8 @@
     <!-- ========== IMPACT ========== -->
     <section class="impact section--dark" id="impact" aria-labelledby="impact-title">
       <div class="vbg" aria-hidden="true">
-        <video class="vbg__video" muted loop playsinline preload="none" poster="assets/video/canopy.jpg?v=20261011132106" data-lazy-video>
-          <source src="assets/video/canopy.mp4?v=20261011132106" type="video/mp4">
+        <video class="vbg__video" muted loop playsinline preload="none" poster="assets/video/canopy.jpg?v=20261011135122" data-lazy-video>
+          <source src="assets/video/canopy.mp4?v=20261011135122" type="video/mp4">
         </video>
         <div class="vbg__shade"></div>
       </div>
@@ -267,9 +339,9 @@
             <p>The Slingshot Challenge is an annual competition run by the National Geographic Society. It asks young people around the world to share a one-minute video about an environmental problem in their community and what they are doing to solve it.</p>
             <p>TREE&rsquo;s video presented the initiative&rsquo;s work and what it had accomplished so far. Out of 2,300 entries, it was named one of the top 50 and received an honorable mention. The team hopes the video helps people understand TREE&rsquo;s goals and inspires them to fight for tree equity wherever they live.</p>
             <figure class="slingshot">
-              <video controls playsinline preload="none" poster="assets/video/slingshot.jpg?v=20261011132106" aria-label="TREE Initiative's National Geographic Slingshot Challenge video">
-                <source src="assets/video/slingshot.mp4?v=20261011132106" type="video/mp4">
-                Your browser can't play this video. <a href="assets/video/slingshot.mp4?v=20261011132106">Download it here.</a>
+              <video controls playsinline preload="none" poster="assets/video/slingshot.jpg?v=20261011135122" aria-label="TREE Initiative's National Geographic Slingshot Challenge video">
+                <source src="assets/video/slingshot.mp4?v=20261011135122" type="video/mp4">
+                Your browser can't play this video. <a href="assets/video/slingshot.mp4?v=20261011135122">Download it here.</a>
               </video>
               <figcaption>Watch TREE&rsquo;s Slingshot Challenge video (1 min).</figcaption>
             </figure>
@@ -288,7 +360,6 @@
       <div class="wrap">
         <div class="section-head" data-reveal>
           <h2 id="team-title" class="h2">The team</h2>
-          <p class="section-intro">TREE was started by Vedika Tandon and is run by three students.</p>
         </div>
 
         <div class="tabs" data-reveal>
@@ -312,12 +383,7 @@
             <div class="person__body">
               <h3>Vedika Tandon</h3>
               <p class="person__role">Founder &amp; President</p>
-              <p>Vedika started TREE after reading research showing that Houston&rsquo;s lower-income neighborhoods have far fewer trees, and are much hotter, than wealthier ones. The research came from Rice University&rsquo;s Kinder Institute, HARC and environmental-justice scholar Dr. Robert Bullard.</p>
-              <ul class="person__list">
-                <li>Set up TREE&rsquo;s partnerships with <span data-from-config="orgCount">8</span> organizations, including Trees for Houston and Friends of Columbia Tap</li>
-                <li>Organized five plantings and a tree-care day in Third Ward and Alief</li>
-                <li>Planned and hosted a public workshop with speakers from Friends of Columbia Tap and Trees for Houston</li>
-              </ul>
+              <p class="person__placeholder">Add information here.</p>
             </div>
           </div>
 
@@ -329,7 +395,7 @@
             <div class="person__body">
               <h3>Neha Ravi</h3>
               <p class="person__role">Vice President</p>
-              <p>Neha is one of TREE&rsquo;s two vice presidents and runs the organization together with Vedika and Juliette, including on planting days.</p>
+              <p class="person__placeholder">Add information here.</p>
             </div>
           </div>
 
@@ -341,7 +407,7 @@
             <div class="person__body">
               <h3>Juliette Oudinot</h3>
               <p class="person__role">Vice President</p>
-              <p>Juliette is one of TREE&rsquo;s two vice presidents and runs the organization together with Vedika and Neha, including on planting days.</p>
+              <p class="person__placeholder">Add information here.</p>
             </div>
           </div>
         </div>
@@ -467,8 +533,8 @@
     <!-- ========== PARTNERS ========== -->
     <section class="partners section--dark section--city" id="partners" aria-labelledby="partners-title">
       <div class="vbg" aria-hidden="true">
-        <video class="vbg__video" muted loop playsinline preload="none" poster="assets/video/hou-night.jpg?v=20261011132106" data-lazy-video>
-          <source src="assets/video/hou-night.mp4?v=20261011132106" type="video/mp4">
+        <video class="vbg__video" muted loop playsinline preload="none" poster="assets/video/hou-night.jpg?v=20261011135122" data-lazy-video>
+          <source src="assets/video/hou-night.mp4?v=20261011135122" type="video/mp4">
         </video>
         <div class="vbg__shade vbg__shade--city"></div>
       </div>
@@ -501,8 +567,8 @@
     <!-- ========== BACKGROUND ========== -->
     <section class="background section--dark section--city" id="background" aria-labelledby="background-title">
       <div class="vbg" aria-hidden="true">
-        <video class="vbg__video" muted loop playsinline preload="none" poster="assets/video/hou-waterwall.jpg?v=20261011132106" data-lazy-video>
-          <source src="assets/video/hou-waterwall.mp4?v=20261011132106" type="video/mp4">
+        <video class="vbg__video" muted loop playsinline preload="none" poster="assets/video/hou-waterwall.jpg?v=20261011135122" data-lazy-video>
+          <source src="assets/video/hou-waterwall.mp4?v=20261011135122" type="video/mp4">
         </video>
         <div class="vbg__shade vbg__shade--city"></div>
       </div>
@@ -595,42 +661,6 @@
       </div>
     </section>
 
-    <!-- ========== JOIN ========== -->
-    <section class="join section--dark" id="join" aria-labelledby="join-title">
-      <div class="vbg" aria-hidden="true">
-        <video class="vbg__video" muted loop playsinline preload="none" poster="assets/video/pines.jpg?v=20261011132106" data-lazy-video>
-          <source src="assets/video/pines.mp4?v=20261011132106" type="video/mp4">
-        </video>
-        <div class="vbg__shade vbg__shade--heavy"></div>
-      </div>
-      <div class="wrap">
-        <h2 id="join-title" class="h2 section-title" data-reveal>Get involved</h2>
-        <div class="join__grid">
-          <article class="join__card join__card--event" data-reveal>
-            <p class="join__kicker">Next planting</p>
-            <div class="date"><span class="date__m" id="evMonth">Oct</span><span class="date__d" id="evDay">24</span></div>
-            <h3 id="evTitle">October Tree Planting</h3>
-            <p id="evPlace">Saturday · 3616 Briley St, Houston</p>
-            <a class="btn btn--light" id="evRsvp" href="mailto:houstontreeinitiative@gmail.com?subject=RSVP%3A%20October%20Tree%20Planting">RSVP by email</a>
-          </article>
-          <article class="join__card" data-reveal>
-            <p class="join__kicker">Donate</p>
-            <h3>Support a planting</h3>
-            <p>All donations pay for tree plantings in underserved Houston neighborhoods and are tax-deductible.</p>
-            <a class="btn btn--ghost" href="mailto:houstontreeinitiative@gmail.com?subject=Donation%20to%20the%20TREE%20Initiative">Arrange a donation</a>
-          </article>
-          <article class="join__card" data-reveal>
-            <p class="join__kicker">Contact</p>
-            <h3>Work with us</h3>
-            <p>If your school, group or neighborhood wants to host a planting, get in touch.</p>
-            <div class="join__links">
-              <a class="btn btn--ghost" href="mailto:houstontreeinitiative@gmail.com">Email us</a>
-              <a class="btn btn--ghost" href="https://www.instagram.com/houstontreeinitiative/" target="_blank" rel="noopener">Instagram</a>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
   </main>
 
   <footer class="footer">
@@ -648,12 +678,12 @@
       </div>
     </div>
     <p class="wrap footer__fine">&copy; <span id="year">2026</span> Houston TREE Initiative. Footage from Mixkit and Pexels (free licenses).
-      Opening video made from photos of Houston&rsquo;s Buffalo Bayou, Mercer Arboretum and Houston Arboretum by
-      <a href="https://commons.wikimedia.org/wiki/File:Buffalo_Bayou.JPG" target="_blank" rel="noopener">JuWiki</a>,
-      <a href="https://commons.wikimedia.org/wiki/File:Mercer_Arboretum,_2012,_Houston,_Texas.JPG" target="_blank" rel="noopener">Another Believer</a>,
-      <a href="https://commons.wikimedia.org/wiki/File:Buffalo_Bayou_as_it_passes_by_Houston%27s_Memorial_Park,_May_2014.jpg" target="_blank" rel="noopener">JoanLouise</a> and
-      <a href="https://commons.wikimedia.org/wiki/File:Houston_Arboretum_and_Nature_Center_-_panoramio_-_Idawriter_(1).jpg" target="_blank" rel="noopener">Idawriter</a>
-      (<a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="noopener">CC BY-SA 3.0</a>; animated and color-adjusted).</p>
+      Opening video made from photos of Buffalo Bayou Park by
+      <a href="https://commons.wikimedia.org/wiki/File:Houston_May_2022_13_(Buffalo_Bayou_Park_and_skyline).jpg" target="_blank" rel="noopener">Michael Barera</a>
+      (<a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a>)
+      and of Mercer Arboretum by
+      <a href="https://commons.wikimedia.org/wiki/File:Mercer_Arboretum,_2012,_Houston,_Texas.JPG" target="_blank" rel="noopener">Another Believer</a>
+      (<a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="noopener">CC BY-SA 3.0</a>); animated and color-adjusted.</p>
   </footer>
 
   <div class="lightbox" id="lightbox" hidden role="dialog" aria-modal="true" aria-label="Photo viewer">
@@ -664,7 +694,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
   <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js" defer></script>
-  <script src="config.js?v=20261011132106" defer></script>
-  <script src="main.js?v=20261011132106" defer></script>
+  <script src="config.js?v=20261011135122" defer></script>
+  <script src="main.js?v=20261011135122" defer></script>
 </body>
 </html>

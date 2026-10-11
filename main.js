@@ -39,6 +39,60 @@
     if (ev.rsvp) $("#evRsvp").href = ev.rsvp;
   }
 
+  /* ---------- Donation form (same options as the old site) ---------- */
+  const donateForm = $("#donateForm");
+  if (donateForm) {
+    const otherWrap = $("#donateOther");
+    const otherInput = $('input[name="otherAmount"]', donateForm);
+    const submit = $("#donateSubmit");
+    const note = $("#donateNote");
+    const comment = $('textarea[name="comment"]', donateForm);
+    const read = () => {
+      const fd = new FormData(donateForm);
+      const pick = fd.get("amount");
+      const amount = pick === "other" ? Math.floor(Number(fd.get("otherAmount"))) : Number(pick);
+      return { monthly: fd.get("frequency") === "monthly", amount, other: pick === "other", comment: String(fd.get("comment") || "") };
+    };
+    const refresh = () => {
+      const d = read();
+      otherWrap.hidden = !d.other;
+      const ok = Number.isFinite(d.amount) && d.amount >= 1;
+      submit.textContent = ok ? `Donate $${d.amount.toLocaleString("en-US")}${d.monthly ? " monthly" : ""}` : "Donate";
+      $("#donateCount").textContent = `${comment.value.length}/100`;
+    };
+    donateForm.addEventListener("input", refresh);
+    donateForm.addEventListener("change", (e) => {
+      if (e.target.name === "amount" && e.target.value === "other") otherInput.focus();
+      refresh();
+    });
+    donateForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const d = read();
+      if (!Number.isFinite(d.amount) || d.amount < 1) {
+        note.textContent = "Please enter an amount of at least $1.";
+        otherInput.focus();
+        return;
+      }
+      const conf = CFG.donate || {};
+      let url;
+      if (conf.paypalEmail) {
+        const q = new URLSearchParams({
+          business: conf.paypalEmail, amount: String(d.amount), currency_code: "USD",
+          item_name: `Houston TREE Initiative${d.monthly ? " (monthly)" : ""}${d.comment ? ": " + d.comment : ""}`.slice(0, 127),
+        });
+        url = `https://www.paypal.com/donate/?${q}`;
+        note.textContent = d.monthly ? "Opening PayPal. Tick “Make this a monthly donation” there to repeat it." : "Opening PayPal in a new tab…";
+      } else if (conf.url) {
+        url = conf.url;
+        note.textContent = `Opening the secure donation page in a new tab. Choose $${d.amount}${d.monthly ? " monthly" : ""} there to finish.`;
+      } else {
+        url = `mailto:houstontreeinitiative@gmail.com?subject=${encodeURIComponent(`Donation: $${d.amount}${d.monthly ? " monthly" : ""}`)}&body=${encodeURIComponent(d.comment)}`;
+      }
+      window.open(url, "_blank", "noopener");
+    });
+    refresh();
+  }
+
   /* ---------- Live visitor counter ---------- */
   const visitorEl = $("#visitorCount");
   (async () => {
