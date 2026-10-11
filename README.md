@@ -29,7 +29,7 @@ config.js         editable numbers
 assets/img/       photos (resized; metadata/GPS stripped)
 assets/bg/        Background-research images and book covers (from the original site)
 assets/og.jpg     1200×630 image shown when the link is shared (iMessage, etc.)
-assets/video/     background loops (blur baked in with ffmpeg)
+assets/video/     background loops; hero.mp4 (desktop) + hero-sm.mp4 (phones); slingshot.mp4
 ```
 
 ## Publishing changes
@@ -43,6 +43,7 @@ Opening (hero) video: built from Wikimedia Commons photos of Houston forests, an
 Photos by JuWiki (Buffalo Bayou), Another Believer (Mercer Arboretum, 2 photos), JoanLouise (Buffalo Bayou at Memorial Park)
 and Idawriter (Houston Arboretum), all [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/). Because of share-alike,
 `assets/video/hero.mp4` is also CC BY-SA 3.0.
+Slingshot Challenge video: TREE's own entry, copied from the original treeinitiative.net site (`assets/video/slingshot.mp4`).
 Other forest footage (impact and get-involved sections): [Mixkit](https://mixkit.co/) (free license).
 Houston footage: [Pexels](https://www.pexels.com/) (free license), clips 18126746, 10901571, 12907204, 32701339.
 National Geographic Society logo: Wikimedia Commons, used only to identify the Slingshot Challenge recognition.
