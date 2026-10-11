@@ -284,8 +284,14 @@ section { position: relative; padding-block: var(--section-y); isolation: isolat
 
 .recognition { display: flex; align-items: center; gap: 32px; margin-top: 64px; padding-top: 36px; border-top: 1px solid var(--rule-dark); }
 .recognition__logo .natgeo { width: 190px; height: auto; color: var(--on-dark); flex-shrink: 0; }
-.recognition p { max-width: 720px; font-size: 18px; color: var(--on-dark-soft); }
-.recognition strong { color: var(--on-dark); }
+.recognition { align-items: flex-start; }
+.recognition__body { max-width: 820px; }
+.recognition h3 { font: 700 clamp(24px, 2.4vw, 30px)/1.2 var(--font-display); color: var(--on-dark); margin-bottom: 12px; }
+.recognition p { font-size: 18.5px; color: var(--on-dark-soft); margin-bottom: 12px; }
+.recognition__stats { display: flex; flex-wrap: wrap; gap: 12px 40px; margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--rule-dark); }
+.recognition__stats li { display: flex; flex-direction: column; }
+.recognition__stats b { font: 600 34px/1.1 var(--font-display); color: var(--ochre-300); }
+.recognition__stats span { font-size: 15.5px; color: var(--on-dark-soft); }
 
 /* ============================================================
    Team (tabs)
