@@ -177,6 +177,13 @@
       set.forEach((p) => row.appendChild(photoButton(p, true)));
       strips.appendChild(row);
     }
+    // Load every strip photo once the section is near, so no blank tile slides into view
+    const eager = new IntersectionObserver((entries, obs) => {
+      if (!entries.some((e) => e.isIntersecting)) return;
+      $$("img", strips).forEach((img) => { img.loading = "eager"; });
+      obs.disconnect();
+    }, { rootMargin: "1200px 0px" });
+    eager.observe(strips);
   }
 
   /* ---------- Lightbox ---------- */
