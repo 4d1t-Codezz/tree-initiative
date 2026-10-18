@@ -56,10 +56,19 @@ Impact-section oak footage: [Pexels](https://www.pexels.com/video/gentle-summer-
 National Geographic Society logo: Wikimedia Commons, used only to identify the Slingshot Challenge recognition.
 Visitor counter: [Abacus](https://abacus.jasoncameron.dev/) (free, no account).
 
-## Using the treeinitiative.net domain
+## Domain: treeinitiative.net
 
-1. In the repo: **Settings → Pages → Custom domain**, enter `www.treeinitiative.net`.
-2. At the domain registrar: add a `CNAME` record `www → 4d1t-codezz.github.io`, plus `A` records for the apex
-   (`185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`).
-3. Disconnect the domain from Wix first.
-4. Update the `og:url` and `og:image` URLs in `index.html` to the new domain so link previews keep working.
+The repo's Pages custom domain is `treeinitiative.net` (see `CNAME`). The domain is registered with Wix and uses
+Wix DNS, so its records are edited in the Wix account (Domains → treeinitiative.net → Manage DNS records):
+
+| Type | Host | Value |
+|---|---|---|
+| A | treeinitiative.net (@) | 185.199.108.153 |
+| A | treeinitiative.net (@) | 185.199.109.153 |
+| A | treeinitiative.net (@) | 185.199.110.153 |
+| A | treeinitiative.net (@) | 185.199.111.153 |
+| CNAME | www | 4d1t-codezz.github.io |
+
+Remove Wix's own A records (185.230.63.x) and the old www CNAME. After DNS updates, GitHub issues an HTTPS
+certificate (can take up to an hour); then turn on **Settings → Pages → Enforce HTTPS**. The domain still renews
+through Wix (next: 2027-08-17).
