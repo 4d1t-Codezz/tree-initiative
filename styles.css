@@ -502,9 +502,9 @@ section { position: relative; padding-block: var(--section-y); isolation: isolat
 
 /* Dark panels behind dense text so the footage around them can stay bright */
 .impact .stats, .impact .impact__lower, .impact .recognition, .why__grid > div:first-child {
-  background: rgb(10 23 16 / .74); border: 1px solid var(--rule-dark); border-radius: var(--radius);
+  /* No backdrop blur: it made the footage behind the panels look out of focus */
+  background: rgb(10 23 16 / .8); border: 1px solid var(--rule-dark); border-radius: var(--radius);
   padding: clamp(22px, 3vw, 36px);
-  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
 }
 .impact .impact__lower { margin-top: 24px; }
 .impact .stats .stat { border-top: 0; padding-top: 0; }

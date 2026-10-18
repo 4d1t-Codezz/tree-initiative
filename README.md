@@ -50,8 +50,9 @@ Buffalo Bayou Park (3 photos, May 2022) by Michael Barera, [CC BY-SA 4.0](https:
 Mercer Arboretum (2 photos, 2012) by Another Believer, [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/).
 Because of share-alike, the `hero-*.mp4` files are CC BY-SA 4.0. Six encodes: AV1 / HEVC / H.264, at 1080p and 960px (phones).
 Slingshot Challenge video: TREE's own entry, copied from the original treeinitiative.net site (`assets/video/slingshot.mp4`).
-Other forest footage (impact and get-involved sections): [Mixkit](https://mixkit.co/) (free license).
+Get-involved pines footage: [Mixkit](https://mixkit.co/) (free license).
 Houston footage: [Pexels](https://www.pexels.com/) (free license), clips 18126746, 12907204, 32701339.
+Impact-section oak footage: [Pexels](https://www.pexels.com/video/gentle-summer-breeze-through-majestic-oak-tree-36482293/) clip 36482293 (free license).
 National Geographic Society logo: Wikimedia Commons, used only to identify the Slingshot Challenge recognition.
 Visitor counter: [Abacus](https://abacus.jasoncameron.dev/) (free, no account).
 
