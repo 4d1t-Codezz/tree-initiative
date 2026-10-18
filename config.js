@@ -44,7 +44,7 @@ window.TREE_CONFIG = {
     // Option A (recommended once set up): a PayPal account that receives donations.
     // Put its email here and the button opens PayPal with the chosen amount filled in
     // (PayPal also offers "make this monthly" on its page).
-    paypalEmail: "",
+    paypalEmail: "houstontreeinitiative@gmail.com",
 
     // Option B (used while paypalEmail is empty): any donation page, e.g. a Stripe,
     // Zeffy or Givebutter link. Right now it's the old Wix donation page, which still

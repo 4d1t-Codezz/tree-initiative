@@ -46,7 +46,7 @@ Mercer Arboretum (2 photos, 2012) by Another Believer, [CC BY-SA 3.0](https://cr
 Because of share-alike, the `hero-*.mp4` files are CC BY-SA 4.0. Six encodes: AV1 / HEVC / H.264, at 1080p and 960px (phones).
 Slingshot Challenge video: TREE's own entry, copied from the original treeinitiative.net site (`assets/video/slingshot.mp4`).
 Other forest footage (impact and get-involved sections): [Mixkit](https://mixkit.co/) (free license).
-Houston footage: [Pexels](https://www.pexels.com/) (free license), clips 18126746, 10901571, 12907204, 32701339.
+Houston footage: [Pexels](https://www.pexels.com/) (free license), clips 18126746, 12907204, 32701339.
 National Geographic Society logo: Wikimedia Commons, used only to identify the Slingshot Challenge recognition.
 Visitor counter: [Abacus](https://abacus.jasoncameron.dev/) (free, no account).
 

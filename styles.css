@@ -77,6 +77,7 @@ section { position: relative; padding-block: var(--section-y); isolation: isolat
 .section--paper { background: var(--paper); color: var(--ink); }
 .section--sage  { background: var(--sage-100); color: var(--ink); }
 .section--dark  { background: var(--forest-900); color: var(--on-dark); }
+.section--solid { background: var(--forest-800); color: var(--on-dark); }
 
 /* Type */
 .h2 {
@@ -398,10 +399,11 @@ section { position: relative; padding-block: var(--section-y); isolation: isolat
 .source blockquote { font: italic 400 19px/1.5 var(--font-display); color: var(--ink); padding-left: 16px; border-left: 3px solid var(--ochre-300); }
 .source .more { margin-top: auto; align-self: flex-start; }
 
-.books { margin-top: clamp(56px, 8vw, 88px); }
+.books { margin-top: clamp(56px, 8vw, 88px); text-align: center; }
 .books h3 { font: 700 34px/1.2 var(--font-display); color: var(--ink); }
-.books__intro { margin: 12px 0 32px; max-width: 760px; font-size: 19px; color: var(--ink-soft); }
-.shelf { display: grid; grid-template-columns: repeat(auto-fill, minmax(132px, 1fr)); gap: 28px 20px; }
+.books__intro { margin: 12px auto 32px; max-width: 760px; font-size: 19px; color: var(--ink-soft); }
+.shelf { display: flex; flex-wrap: wrap; justify-content: center; gap: 28px 20px; max-width: 1040px; margin-inline: auto; }
+.shelf li { width: 148px; }
 .shelf li { display: flex; flex-direction: column; gap: 4px; }
 .shelf img { width: 100%; aspect-ratio: 2 / 3; object-fit: cover; border-radius: 3px; box-shadow: 0 1px 2px rgb(20 14 8 / .15), 0 8px 18px -8px rgb(20 14 8 / .35); margin-bottom: 8px; }
 .shelf b { font-size: 16px; line-height: 1.3; color: var(--ink); }
@@ -563,7 +565,7 @@ section { position: relative; padding-block: var(--section-y); isolation: isolat
   .logos li { min-height: 180px; padding: 18px 12px; }
   .logos img, .logos__text { height: 72px; }
   .source__body { padding: 22px; }
-  .shelf { grid-template-columns: repeat(2, 1fr); }
+  .shelf li { width: calc(50% - 10px); }
   .join__grid { grid-template-columns: 1fr; grid-template-areas: "donate" "event" "contact"; }
   .donate__options span { min-width: 72px; padding: 11px 12px; }
   .footer__grid { grid-template-columns: 1fr; }

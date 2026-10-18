@@ -88,7 +88,12 @@
       } else {
         url = `mailto:houstontreeinitiative@gmail.com?subject=${encodeURIComponent(`Donation: $${d.amount}${d.monthly ? " monthly" : ""}`)}&body=${encodeURIComponent(d.comment)}`;
       }
-      window.open(url, "_blank", "noopener");
+      // New tab if allowed; if a popup blocker stops it, go there in this tab instead.
+      // (Not using the "noopener" feature string: it makes window.open always return null,
+      // so a blocked popup would fail silently.)
+      const w = window.open(url, "_blank");
+      if (w) w.opener = null;
+      else window.location.href = url;
     });
     refresh();
   }
