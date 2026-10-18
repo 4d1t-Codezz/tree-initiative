@@ -49,10 +49,7 @@ window.TREE_CONFIG = {
     // Only used if paypalMe is empty.
     paypalEmail: "",
 
-    // Last resort (used only if both above are empty): any donation page, e.g. a Stripe,
-    // Zeffy or Givebutter link. Right now it's the old Wix donation page, which still
-    // processes payments. IMPORTANT: if treeinitiative.net is pointed at this new site,
-    // this Wix link stops working, so switch to option A or another link first.
-    url: "https://www.treeinitiative.net/donate",
+    // Last resort (used only if both above are empty): any donation page link.
+    url: "https://paypal.me/TREEInitiative",
   },
 };
