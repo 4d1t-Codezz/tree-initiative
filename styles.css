@@ -125,8 +125,8 @@ section { position: relative; padding-block: var(--section-y); isolation: isolat
 
 /* Dark sections recolor body text; light cards inside them keep dark text */
 .section--dark { --ink: var(--on-dark); --ink-soft: var(--on-dark-soft); }
-.glance__card, .source, .logos li { --ink: #1d1a14; --ink-soft: #4d473b; color: var(--ink); }
-.section--dark .glance__card .more, .section--dark .source .more { color: var(--moss-500); }
+.source, .logos li { --ink: #1d1a14; --ink-soft: #4d473b; color: var(--ink); }
+.section--dark .source .more { color: var(--moss-500); }
 .vbg__shade--hero {
   background:
     linear-gradient(90deg, rgb(10 23 16 / .66) 0%, rgb(10 23 16 / .38) 45%, rgb(10 23 16 / 0) 72%),
@@ -225,12 +225,13 @@ section { position: relative; padding-block: var(--section-y); isolation: isolat
 /* ============================================================
    At a glance
    ============================================================ */
-.glance__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-.glance__card { display: flex; flex-direction: column; gap: 14px; padding: 36px; border-radius: var(--radius); background: var(--paper); border: 1px solid var(--cream-200); }
-.glance__card h3 { font: 700 30px/1.2 var(--font-display); color: var(--forest-800); }
-.glance__card p { color: var(--ink-soft); font-size: 19px; }
-.glance__card strong { color: var(--ink); font-weight: 700; }
-.glance__card .more { margin-top: auto; align-self: flex-start; }
+.glance__grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 6vw, 80px); }
+/* No boxes: white text straight on the green, like the section title */
+.glance__item { display: flex; flex-direction: column; gap: 14px; color: var(--on-dark); }
+.glance__item h3 { font: 700 clamp(28px, 2.6vw, 34px)/1.2 var(--font-display); color: var(--on-dark); }
+.glance__item p { color: var(--on-dark); font-size: 20px; line-height: 1.6; }
+.glance__item strong { color: #fff; font-weight: 700; }
+.glance__item .more { margin-top: auto; align-self: flex-start; color: var(--ochre-300); }
 
 /* ============================================================
    Why
@@ -478,10 +479,10 @@ section { position: relative; padding-block: var(--section-y); isolation: isolat
 /* ============================================================
    Hover: lift + warm glow
    ============================================================ */
-.glance__card, .source, .logos li, .goal-item, .join__card, .fact, .tabs__list [role="tab"], .stat, .shelf li, .btn {
+.source, .logos li, .goal-item, .join__card, .fact, .tabs__list [role="tab"], .stat, .shelf li, .btn {
   transition: transform .5s var(--ease-out), box-shadow .5s var(--ease-out), border-color .3s, background .3s, color .3s;
 }
-.glance__card:hover, .source:hover, .logos li:hover, .tabs__list [role="tab"]:hover {
+.source:hover, .logos li:hover, .tabs__list [role="tab"]:hover {
   transform: translateY(-6px);
   box-shadow: 0 24px 44px -22px rgb(20 14 8 / .5), 0 0 0 1px rgb(217 178 111 / .75), 0 0 34px -8px rgb(217 178 111 / .55);
 }
@@ -512,7 +513,7 @@ section { position: relative; padding-block: var(--section-y); isolation: isolat
 /* Text sitting directly on video */
 /* Lighter overlays, so lean on a stronger shadow to keep text crisp */
 .hero, .section--city, .impact, .join { text-shadow: 0 1px 2px rgb(0 0 0 / .45), 0 2px 18px rgb(0 0 0 / .55); }
-.glance__card, .source, .logos li, .btn, .fact { text-shadow: none; }
+.source, .logos li, .btn, .fact { text-shadow: none; }
 
 /* ============================================================
    Responsive
@@ -550,7 +551,6 @@ section { position: relative; padding-block: var(--section-y); isolation: isolat
   .award { flex-direction: column; align-items: flex-start; gap: 12px; }
   .award__text { padding-left: 0; border-left: 0; }
   .hero__ctas .btn { flex: 1 1 auto; }
-  .glance__card { padding: 26px; }
   .facts { grid-template-columns: 1fr; }
   .goal-item { display: flex; }
   .goal-item__img { aspect-ratio: 16 / 9; }
