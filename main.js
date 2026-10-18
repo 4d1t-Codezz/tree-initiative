@@ -75,7 +75,13 @@
       }
       const conf = CFG.donate || {};
       let url;
-      if (conf.paypalEmail) {
+      if (conf.paypalMe) {
+        // PayPal.me pre-fills the amount; it handles one-time payments only
+        url = `https://paypal.me/${encodeURIComponent(conf.paypalMe)}/${d.amount}USD`;
+        note.textContent = d.monthly
+          ? "Opening PayPal for this month’s gift. PayPal.me can’t repeat payments automatically, so email us to set up a monthly donation."
+          : "Opening PayPal in a new tab…";
+      } else if (conf.paypalEmail) {
         const q = new URLSearchParams({
           business: conf.paypalEmail, amount: String(d.amount), currency_code: "USD",
           item_name: `Houston TREE Initiative${d.monthly ? " (monthly)" : ""}${d.comment ? ": " + d.comment : ""}`.slice(0, 127),

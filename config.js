@@ -41,12 +41,15 @@ window.TREE_CONFIG = {
   // Where the "Donate" button sends people to pay. GitHub Pages can't take payments
   // itself, so the form hands off to a payment processor in a new tab.
   donate: {
-    // Option A (recommended once set up): a PayPal account that receives donations.
-    // Put its email here and the button opens PayPal with the chosen amount filled in
-    // (PayPal also offers "make this monthly" on its page).
-    paypalEmail: "houstontreeinitiative@gmail.com",
+    // Used first: TREE's PayPal.me name (paypal.me/TREEInitiative). The button opens
+    // paypal.me/<name>/<amount>USD so the chosen amount is already filled in.
+    paypalMe: "TREEInitiative",
 
-    // Option B (used while paypalEmail is empty): any donation page, e.g. a Stripe,
+    // Alternative: a PayPal Business account email (opens PayPal's donate page).
+    // Only used if paypalMe is empty.
+    paypalEmail: "",
+
+    // Last resort (used only if both above are empty): any donation page, e.g. a Stripe,
     // Zeffy or Givebutter link. Right now it's the old Wix donation page, which still
     // processes payments. IMPORTANT: if treeinitiative.net is pointed at this new site,
     // this Wix link stops working, so switch to option A or another link first.
