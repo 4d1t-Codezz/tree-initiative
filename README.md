@@ -33,6 +33,11 @@ assets/og.jpg     1200×630 image shown when the link is shared (iMessage, etc.)
 assets/video/     background loops; hero-*.mp4 (opening video, 6 encodes); slingshot.mp4
 ```
 
+## Rebuilding the opening video
+
+`python3 tools/build-hero.py` downloads the five Commons photos, renders the slow-zoom loop and writes all
+six `hero-*.mp4` files plus `hero.jpg`. Needs Pillow and an ffmpeg with libsvtav1, libx265 and libx264.
+
 ## Publishing changes
 
 Run `sh tools/bump-version.sh` before committing. It stamps a new `?v=` on the CSS, JS and video links in `index.html`;

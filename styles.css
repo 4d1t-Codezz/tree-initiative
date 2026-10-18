@@ -113,7 +113,7 @@ section { position: relative; padding-block: var(--section-y); isolation: isolat
 /* Background video (blur is baked into the files with ffmpeg) */
 .vbg { position: absolute; inset: 0; z-index: -1; overflow: hidden; }
 /* max-width:none overrides the base `video { max-width: 100% }`, which otherwise cut the right edge short */
-.vbg__video { position: absolute; inset: -6% 0; width: 100%; height: 112%; max-width: none; object-fit: cover; }
+.vbg__video { position: absolute; inset: -6% 0; width: 100%; height: 112%; max-width: none; object-fit: cover; will-change: transform; transform: translateZ(0); }
 .vbg__shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgb(10 23 16 / .45), rgb(10 23 16 / .55)); }
 .vbg__shade--heavy { background: linear-gradient(180deg, rgb(10 23 16 / .38), rgb(10 23 16 / .5)); }
 /* Houston footage: lighter so the city stays recognizable */

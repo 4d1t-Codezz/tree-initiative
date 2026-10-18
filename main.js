@@ -298,12 +298,13 @@
 
     // Hero intro
     gsap.timeline({ defaults: { ease: "expo.out" } })
-      .from(".hero .vbg__video", { scale: 1.2, duration: 2.4, ease: "power2.out" }, 0)
       .from("[data-hero-line]", { yPercent: 115, duration: 1.3, stagger: 0.1 }, 0.15)
       .from("[data-hero]", { y: 20, autoAlpha: 0, duration: 1.1, stagger: 0.08 }, 0.4);
 
     // Hero video slowly drifts as you scroll away
-    gsap.to(".hero .vbg__video", { yPercent: 8, scale: 1.06, ease: "none", scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true } });
+    // Hero video drifts down slightly as you scroll away. Translate only (no scale), and at most
+    // 5% of its height: it is 112% tall with 6% overflow each side, so no gap can open at the top.
+    gsap.to(".hero .vbg__video", { yPercent: 5, ease: "none", scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: 0.4 } });
 
     // Reveal on scroll. clearProps afterwards so CSS :hover transforms work again.
     gsap.set("[data-reveal]", { autoAlpha: 0, y: 36 });
