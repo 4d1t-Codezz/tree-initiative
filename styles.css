@@ -330,6 +330,14 @@ section { position: relative; padding-block: var(--section-y); isolation: isolat
 .person__list li { position: relative; padding-left: 26px; font-size: 18.5px; color: var(--ink-soft); }
 .person__list li::before { content: ""; position: absolute; left: 2px; top: .62em; width: 10px; height: 10px; border-radius: 2px; background: var(--moss-400); }
 
+/* Team: three photos with names */
+.people { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(16px, 3vw, 32px); }
+.person-card { display: flex; flex-direction: column; gap: 14px; text-align: center; transition: transform .5s var(--ease-out); }
+.person-card img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: var(--radius); box-shadow: 0 18px 40px -20px rgb(20 14 8 / .45); transition: box-shadow .5s var(--ease-out); }
+.person-card h3 { font: 700 clamp(22px, 2.2vw, 28px)/1.2 var(--font-display); color: var(--forest-800); }
+.person-card:hover { transform: translateY(-6px); }
+.person-card:hover img { box-shadow: 0 0 0 2px var(--ochre-300), 0 26px 50px -20px rgb(20 14 8 / .55), 0 0 34px -8px rgb(217 178 111 / .55); }
+
 /* ============================================================
    Projects
    ============================================================ */
@@ -544,6 +552,7 @@ section { position: relative; padding-block: var(--section-y); isolation: isolat
 }
 
 @media (max-width: 640px) {
+  .people { grid-template-columns: 1fr; max-width: 360px; margin-inline: auto; }
   body { font-size: 17.5px; }
   /* Text spans the full width on phones, so darken evenly instead of from the left */
   .vbg__shade--hero { background: linear-gradient(180deg, rgb(10 23 16 / .45), rgb(10 23 16 / .35) 50%, rgb(10 23 16 / .55)); }
