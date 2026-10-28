@@ -426,8 +426,17 @@ section { position: relative; padding-block: var(--section-y); isolation: isolat
 .join__card--event { grid-area: event; }
 .join__card--donate { grid-area: donate; }
 .join__grid > .join__card:last-child { grid-area: contact; }
-/* No upcoming event (card removed): contact takes the left column */
-.join__grid:not(:has(.join__card--event)) { grid-template-areas: "contact donate"; }
+/* No upcoming event (card removed): contact takes its place. Defined per breakpoint, because
+   a single :has() rule here outranked the phone layout and pushed the page wider than the screen. */
+@media (min-width: 1001px) {
+  .join__grid:not(:has(.join__card--event)) { grid-template-areas: "contact donate"; }
+}
+@media (min-width: 641px) and (max-width: 1000px) {
+  .join__grid:not(:has(.join__card--event)) { grid-template-areas: "donate donate" "contact contact"; }
+}
+@media (max-width: 640px) {
+  .join__grid:not(:has(.join__card--event)) { grid-template-areas: "donate" "contact"; }
+}
 .join__card { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; padding: 30px; border-radius: var(--radius); background: rgb(10 23 16 / .7); border: 1px solid var(--rule-dark); }
 .join__card--event { background: var(--forest-800); border-color: rgb(217 178 111 / .45); }
 .join__card h3 { font: 700 27px/1.2 var(--font-display); }
