@@ -28,6 +28,8 @@
   const evCard = $(".join__card--event");
   if (ev === null && evCard) {
     evCard.remove();
+  } else if (ev && evCard && new Date(ev.date + "T23:59:59") < new Date()) {
+    evCard.remove();   // the event already happened; update nextEvent in config.js
   } else if (ev && evCard) {
     const d = new Date(ev.date + "T12:00:00");
     if (!isNaN(d)) {
@@ -196,6 +198,8 @@
 
   /* ---------- Planting photos ---------- */
   const photos = [
+    ["ct4-5", "Volunteers digging along the Columbia Tap Trail"], ["ct4-2", "Hauling mulch at Columbia Tap Planting #4"],
+    ["ct4-7", "Volunteers potting and planting near the AIDS Memorial Garden"], ["ct4-3", "A newly planted tree on the trail"],
     ["ev02", "Volunteers gathered on the Columbia Tap Trail"], ["ev08", "Volunteers at Alief Planting #1"],
     ["ev10", "Planting a tree on an Alief esplanade"], ["ev05", "A volunteer carrying a tree to plant"],
     ["ev13", "Digging in at Alief"], ["ev01", "Rows of newly planted, mulched trees"],
@@ -217,6 +221,8 @@
     ["ev35", "Volunteers on the Alief esplanade"], ["ev36", "A newly shaded median in Alief"],
     ["ev40", "A tree freshly mulched"], ["home3", "New saplings, mulched and watered"],
     ["partnerbanner", "A row of newly planted trees"],
+    ["ct4-1", "Digging a hole for a new tree"], ["ct4-6", "Volunteers digging in at the trail"],
+    ["ct4-8", "Established trees ready to plant"], ["ct4-4", "The Columbia Tap Rail to Trail sign"],
   ];
   const photoButton = ([name, alt], duplicate) => {
     const b = document.createElement("button");
