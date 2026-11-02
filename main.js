@@ -35,10 +35,18 @@
     if (!isNaN(d)) {
       $("#evMonth").textContent = d.toLocaleString("en-US", { month: "short" });
       $("#evDay").textContent = d.getDate();
-      $("#evPlace").textContent = `${d.toLocaleString("en-US", { weekday: "long" })} · ${ev.place}`;
+      $("#evPlace").textContent = [d.toLocaleString("en-US", { weekday: "long" }), ev.time, ev.place].filter(Boolean).join(" · ");
     }
     $("#evTitle").textContent = ev.title;
-    if (ev.rsvp) $("#evRsvp").href = ev.rsvp;
+    const rsvp = $("#evRsvp"), flyer = $("#evFlyer"), note = $("#evNote");
+    if (ev.rsvp) {
+      rsvp.href = ev.rsvp;
+      const isMail = ev.rsvp.startsWith("mailto:");
+      if (isMail) { rsvp.removeAttribute("target"); rsvp.removeAttribute("rel"); }
+      rsvp.textContent = ev.rsvpLabel || (isMail ? "RSVP by email" : "Sign up");
+    }
+    if (ev.flyer) flyer.href = ev.flyer; else flyer.remove();
+    if (ev.note) note.textContent = ev.note; else note.remove();
   }
 
   /* ---------- Donation form (same options as the old site) ---------- */

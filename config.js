@@ -31,11 +31,16 @@ window.TREE_CONFIG = {
   ],
 
   // Next event shown in "Get involved". Set to null to hide the card.
+  // The card also hides itself the day after `date`, so update this for each new event.
   nextEvent: {
-    title: "October Tree Planting",
-    date: "2026-10-24",            // YYYY-MM-DD
-    place: "3616 Briley St, Houston",
-    rsvp: "mailto:houstontreeinitiative@gmail.com?subject=RSVP%3A%20October%20Tree%20Planting",
+    title: "Campus Beautification Day",
+    date: "2026-11-06",            // YYYY-MM-DD
+    time: "9:30 AM–1:30 PM",       // optional
+    place: "CVHS campus",
+    note: "Planting a tree, cleaning up, replanting and repotting around campus with ECO Club and NHS. Counts for 6 service hours.",
+    rsvp: "https://forms.gle/uWZ5XDxYxzrA1Cz69",   // sign-up form or mailto: link
+    rsvpLabel: "Sign up",
+    flyer: "assets/img/cvhs-flyer.jpg",            // optional; "" hides the link
   },
 
   // Where the "Donate" button sends people to pay. GitHub Pages can't take payments

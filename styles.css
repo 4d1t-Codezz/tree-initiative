@@ -443,9 +443,14 @@ section { position: relative; padding-block: var(--section-y); isolation: isolat
 .join__card p:not(.join__kicker) { color: var(--on-dark-soft); font-size: 18px; }
 .join__card .btn { margin-top: auto; }
 .join__kicker { font: italic 400 19px/1.3 var(--font-display); color: var(--ochre-300); }
+.join__card p.join__evnote { font-size: 16.5px; }
+.join__evlinks { margin-top: auto; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; }
+.join__evlinks .btn { margin-top: 0; }
+.join__evflyer { color: var(--ochre-300); font-weight: 600; text-underline-offset: 4px; }
+.join__evflyer:hover { color: #fff; }
 .join__links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: auto; }
 .join__links .btn { margin-top: 0; }
-.join__card a { color: var(--ochre-300); }
+.join__card a:not(.btn) { color: var(--ochre-300); }
 
 /* Donation form */
 .donate { display: grid; gap: 18px; width: 100%; margin-top: 6px; }
