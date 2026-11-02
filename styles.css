@@ -444,9 +444,9 @@ section { position: relative; padding-block: var(--section-y); isolation: isolat
 .join__card .btn { margin-top: auto; }
 .join__kicker { font: italic 400 19px/1.3 var(--font-display); color: var(--ochre-300); }
 .join__card p.join__evnote { font-size: 16.5px; }
-.join__evlinks { margin-top: auto; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; }
+.join__evlinks { margin-top: 4px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; }
 .join__evlinks .btn { margin-top: 0; }
-.join__evflyer { display: block; width: 100%; max-width: 340px; border-radius: 10px; overflow: hidden; box-shadow: 0 14px 30px -16px rgb(0 0 0 / .6); transition: transform .4s var(--ease-out), box-shadow .4s var(--ease-out); }
+.join__evflyer { display: block; width: 100%; max-width: 340px; margin-top: 10px; border-radius: 10px; overflow: hidden; box-shadow: 0 14px 30px -16px rgb(0 0 0 / .6); transition: transform .4s var(--ease-out), box-shadow .4s var(--ease-out); }
 .join__evflyer img { display: block; width: 100%; height: auto; }
 .join__evflyer:hover { transform: translateY(-3px); box-shadow: 0 0 0 2px var(--ochre-300), 0 18px 34px -16px rgb(0 0 0 / .6); }
 .join__links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: auto; }
