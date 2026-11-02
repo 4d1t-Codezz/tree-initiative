@@ -45,7 +45,7 @@
       if (isMail) { rsvp.removeAttribute("target"); rsvp.removeAttribute("rel"); }
       rsvp.textContent = ev.rsvpLabel || (isMail ? "RSVP by email" : "Sign up");
     }
-    if (ev.flyer) flyer.href = ev.flyer; else flyer.remove();
+    if (ev.flyer) { flyer.href = ev.flyer; $("img", flyer).src = ev.flyer; } else flyer.remove();
     if (ev.note) note.textContent = ev.note; else note.remove();
   }
 
