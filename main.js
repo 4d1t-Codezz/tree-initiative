@@ -206,6 +206,8 @@
 
   /* ---------- Planting photos ---------- */
   const photos = [
+    ["cv7", "Volunteers with the new Texas redbud at CVHS"], ["cv8", "Volunteers with tools on the CVHS campus"],
+    ["cv2", "Digging the hole for the redbud"], ["cv3", "Mulching the newly planted redbud"],
     ["ct4-5", "Volunteers digging along the Columbia Tap Trail"], ["ct4-2", "Hauling mulch at Columbia Tap Planting #4"],
     ["ct4-7", "Volunteers potting and planting near the AIDS Memorial Garden"], ["ct4-3", "A newly planted tree on the trail"],
     ["ev02", "Volunteers gathered on the Columbia Tap Trail"], ["ev08", "Volunteers at Alief Planting #1"],
@@ -231,6 +233,9 @@
     ["partnerbanner", "A row of newly planted trees"],
     ["ct4-1", "Digging a hole for a new tree"], ["ct4-6", "Volunteers digging in at the trail"],
     ["ct4-8", "Established trees ready to plant"], ["ct4-4", "The Columbia Tap Rail to Trail sign"],
+    ["cv1", "Bagging weeds outside a CVHS building"], ["cv4", "Backfilling soil around the new tree"],
+    ["cv6", "The new Texas redbud outside the CVHS library"], ["cv9", "A new bed of native plants on campus"],
+    ["cv5", "An overgrown bed before the cleanup"],
   ];
   const photoButton = ([name, alt], duplicate) => {
     const b = document.createElement("button");
