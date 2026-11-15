@@ -10,7 +10,6 @@ Open **`config.js`**. Every number on the site that is likely to change is set t
 | Setting | What it controls |
 |---|---|
 | `schoolStudents` | "Students from Vedika's school" stat (set to a number) |
-| `visitorBaseline` | Visitors from before this site launched (e.g. the Wix Analytics total); the live counter adds on top |
 | `partners` | Partner list; the "N organizations" count is computed from its length |
 | `nextEvent` | The "Next planting" card in Get Involved (`null` hides it) |
 | `donate` | Where the Donate button sends people: set `paypalEmail` to use PayPal with the amount pre-filled; otherwise `url` is opened (currently the old Wix donation page, which stops working once the domain moves) |
@@ -24,7 +23,7 @@ The photo list for the sliding strips is in the "Planting photos" block in `main
 ```
 index.html        page content
 styles.css        design tokens (colors, type) at the top, then sections
-main.js           animations (GSAP + ScrollTrigger + Lenis), visitor counter, team tabs, photo strips
+main.js           animations (GSAP + ScrollTrigger + Lenis), team tabs, photo strips
 config.js         editable numbers
 404.html          redirects old Wix URLs (/about-us, /donate, …) to the right section
 assets/img/       photos (resized; metadata/GPS stripped)
@@ -54,7 +53,6 @@ Get-involved pines footage: [Mixkit](https://mixkit.co/) (free license).
 Houston footage: [Pexels](https://www.pexels.com/) (free license), clips 18126746, 12907204, 32701339.
 Impact-section oak footage: [Pexels](https://www.pexels.com/video/gentle-summer-breeze-through-majestic-oak-tree-36482293/) clip 36482293 (free license).
 National Geographic Society logo: Wikimedia Commons, used only to identify the Slingshot Challenge recognition.
-Visitor counter: [Abacus](https://abacus.jasoncameron.dev/) (free, no account).
 
 ## Domain: treeinitiative.net
 

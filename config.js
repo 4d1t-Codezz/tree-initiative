@@ -9,15 +9,6 @@ window.TREE_CONFIG = {
   // Set to a number, e.g. 25. Leave as null to show a dash.
   schoolStudents: null,
 
-  // Visitors counted before this site launched (e.g. the total from Wix Analytics).
-  // The live counter adds new visits on top of this number.
-  visitorBaseline: 0,
-
-  // Live visitor counter (free, no account needed: abacus.jasoncameron.dev).
-  // Only change these if you want to reset the count.
-  counterNamespace: "treeinitiative-net",
-  counterKey: "site-visits",
-
   // Partner organizations: the count on the page is computed from this list.
   partners: [
     "Friends of Columbia Tap",

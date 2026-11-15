@@ -114,29 +114,6 @@
     refresh();
   }
 
-  /* ---------- Live visitor counter ---------- */
-  const visitorEl = $("#visitorCount");
-  (async () => {
-    const base = Number(CFG.visitorBaseline) || 0;
-    const ns = encodeURIComponent(CFG.counterNamespace || "treeinitiative-net");
-    const key = encodeURIComponent(CFG.counterKey || "visits");
-    let counted = false;
-    try { counted = sessionStorage.getItem("tree-counted") === "1"; } catch (_) {}
-    try {
-      const res = await fetch(`https://abacus.jasoncameron.dev/${counted ? "get" : "hit"}/${ns}/${key}`, { cache: "no-store" });
-      if (!res.ok) throw new Error(res.status);
-      const { value } = await res.json();
-      if (typeof value !== "number") throw new Error("bad value");
-      try { sessionStorage.setItem("tree-counted", "1"); } catch (_) {}
-      const total = base + value;
-      visitorEl.dataset.count = total;
-      if (window.gsap && !reduceMotion && visitorEl.dataset.seen) countUp(visitorEl, total);
-      else visitorEl.textContent = fmt(total);
-    } catch (_) {
-      visitorEl.textContent = base ? fmt(base) : "—";
-    }
-  })();
-
   /* ---------- Mobile menu ---------- */
   const toggle = $("#navToggle");
   const menu = $("#mobileMenu");
